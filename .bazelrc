@@ -1,0 +1,6 @@
+common --enable_platform_specific_config
+common --experimental_announce_profile_path
+
+build --incompatible_strict_action_env
+
+try-import .bazelrc.user

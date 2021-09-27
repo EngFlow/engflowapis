@@ -1,0 +1,126 @@
+// Copyright 2021 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.eventstore.v1;
+
+import "google/api/field_behavior.proto";
+import "engflow/eventstore/v1/build_event.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "EventStoreProtos";
+option java_package = "com.engflow.eventstore.v1";
+
+// This is the interface used to retrieve raw event streams from the EventStore
+// service.
+service EventStore {
+  // Retrieves a BES stream with the given build ID.
+  //
+  // Note that this is conceptually different from `EventStore/StreamInvocation`
+  // as the latter only streams events from a single invocation while this one
+  // may stream events from multiple (retried) invocations.
+  //
+  // The first event is guaranteed to be of type `BuildEnqueued`.
+  //
+  // An error will be reported in the following cases:
+  //   * `INVALID_ARGUMENT`: The request is invalid (e.g., did not specify an
+  //                         build ID).
+  //   * `NOT_FOUND`: A build with the specified build ID does not exist.
+  rpc GetBuild(GetBuildRequest) returns (stream StreamedBuildEvent) {}
+
+  // Retrieves a BES stream with the given invocation ID.
+  //
+  // The first event is guaranteed to be of type `InvocationAttemptStarted`.
+  //
+  // An error will be reported in the following cases:
+  //   * `INVALID_ARGUMENT`: The request is invalid (e.g., did not specify an
+  //                         invocation ID).
+  //   * `NOT_FOUND`: A build with the specified invocation ID does not exist.
+  rpc GetInvocation(GetInvocationRequest) returns (stream StreamedBuildEvent) {}
+}
+
+// A request message for `EventStore/GetBuild`.
+message GetBuildRequest {
+  // Reserved for future use.
+  reserved 1;
+  reserved "instance_name";
+
+  // The ID of the build to retrieve.
+  //
+  // Must be an RFC 4122-compliant random UUID.
+  string build_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // A token that allows reading a stream of build events starting with an
+  // specific event.
+  //
+  // Clients *MUST NOT* assume any specific format of this field.
+  optional string continuation_token = 3
+      [(google.api.field_behavior) = OPTIONAL];
+}
+
+// A request message for `EventStore/GetInvocation`.
+message GetInvocationRequest {
+  // Reserved for future use.
+  reserved 1;
+  reserved "instance_name";
+
+  // The ID of the invocation to retrieve.
+  //
+  // Must be an RFC 4122-compliant random UUID.
+  string invocation_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // A token that allows reading a stream of invocation events starting with an
+  // specific event.
+  //
+  // Clients *MUST NOT* assume any specific format of this field.
+  optional string continuation_token = 3
+      [(google.api.field_behavior) = OPTIONAL];
+
+  enum ReplayMode {
+    // Replay events until the stream is complete. If the stream is ongoing,
+    // then this replays events from storage until the reader is caught up with
+    // the writer, and then continues replaying events live. If the writer goes
+    // away for some reason, this hangs until the stream times out. When
+    // replaying a stream from storage that was never completed, this returns an
+    // exception after the last event.
+    UNTIL_COMPLETE = 0;
+
+    reserved 1;  // Used for `UNTIL_COMPLETE` in an old version of the API.
+
+    // Replay events until we are caught up with the writer and then stop. If
+    // the storage contains an incomplete stream, then this silently returns
+    // after the last event that could be successfully read from storage.
+    STOP_AFTER_LAST_KNOWN = 2;
+  }
+  ReplayMode replay_mode = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+message StreamedBuildEvent {
+  // Indicates that this is the last event of the stream.
+  bool is_last = 1;
+
+  // A token that allows starting a stream of invocation events starting with
+  // the event immediately following the current one.
+  //
+  // Clients *MUST NOT* assume any specific format of this field.
+  string continuation_token = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The actual build event.
+  //
+  // This may be null iff `is_last` is true and client provided a continuation
+  // token that would continue the stream after the last event of the BES
+  // stream.
+  optional BuildProgressEvent event = 3 [(google.api.field_behavior) = OPTIONAL];
+}

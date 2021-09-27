@@ -1,0 +1,9 @@
+# User-specific bazelrc
+.bazelrc.user
+
+# Bazel convinience symlinks.
+/bazel-*
+.ijwb
+
+# macOS-specific excludes.
+.DS_Store
