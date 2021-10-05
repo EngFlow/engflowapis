@@ -51,6 +51,26 @@ service EventStore {
   rpc GetInvocation(GetInvocationRequest) returns (stream StreamedBuildEvent) {}
 }
 
+// Wrapper around `ReplayMode` to keep enum scoped.
+message ReplayModeOptions {
+  enum ReplayMode {
+    // Replay events until the stream is complete. If the stream is ongoing,
+    // then this replays events from storage until the reader is caught up with
+    // the writer, and then continues replaying events live. If the writer goes
+    // away for some reason, this hangs until the stream times out. When
+    // replaying a stream from storage that was never completed, this returns an
+    // exception after the last event.
+    UNTIL_COMPLETE = 0;
+
+    reserved 1;  // Used for `UNTIL_COMPLETE` in an old version of the API.
+
+    // Replay events until we are caught up with the writer and then stop. If
+    // the storage contains an incomplete stream, then this silently returns
+    // after the last event that could be successfully read from storage.
+    STOP_AFTER_LAST_KNOWN = 2;
+  }
+}
+
 // A request message for `EventStore/GetBuild`.
 message GetBuildRequest {
   // Reserved for future use.
@@ -88,23 +108,9 @@ message GetInvocationRequest {
   optional string continuation_token = 3
       [(google.api.field_behavior) = OPTIONAL];
 
-  enum ReplayMode {
-    // Replay events until the stream is complete. If the stream is ongoing,
-    // then this replays events from storage until the reader is caught up with
-    // the writer, and then continues replaying events live. If the writer goes
-    // away for some reason, this hangs until the stream times out. When
-    // replaying a stream from storage that was never completed, this returns an
-    // exception after the last event.
-    UNTIL_COMPLETE = 0;
-
-    reserved 1;  // Used for `UNTIL_COMPLETE` in an old version of the API.
-
-    // Replay events until we are caught up with the writer and then stop. If
-    // the storage contains an incomplete stream, then this silently returns
-    // after the last event that could be successfully read from storage.
-    STOP_AFTER_LAST_KNOWN = 2;
-  }
-  ReplayMode replay_mode = 4 [(google.api.field_behavior) = REQUIRED];
+  // The mode the server should use to replay the stream.
+  ReplayModeOptions.ReplayMode replay_mode = 4
+      [(google.api.field_behavior) = REQUIRED];
 }
 
 message StreamedBuildEvent {
@@ -122,5 +128,6 @@ message StreamedBuildEvent {
   // This may be null iff `is_last` is true and client provided a continuation
   // token that would continue the stream after the last event of the BES
   // stream.
-  optional BuildProgressEvent event = 3 [(google.api.field_behavior) = OPTIONAL];
+  optional BuildProgressEvent event = 3
+      [(google.api.field_behavior) = OPTIONAL];
 }
