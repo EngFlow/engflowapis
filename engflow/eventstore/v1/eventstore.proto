@@ -79,7 +79,17 @@ message GetBuildRequest {
 
   // The ID of the build to retrieve.
   //
-  // Must be an RFC 4122-compliant random UUID.
+  // *MUST* follow the following grammar:
+  //
+  // ```
+  // <stream-id>            -> (<namespace>)<uuid>
+  // <namespace>            -> <identifier><namespace-separator>(<namespace>)
+  // <uuid>                 -> A RFC 4122-compliant UUID.
+  // <namespace-separator>  -> /
+  // <identifier>           -> <alphanum>((<dash>)<identifier>)
+  // <alphanum>             -> [a-zA-Z0-9]
+  // <dash>                 -> -
+  // ```
   string build_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // A token that allows reading a stream of build events starting with an
@@ -98,7 +108,7 @@ message GetInvocationRequest {
 
   // The ID of the invocation to retrieve.
   //
-  // Must be an RFC 4122-compliant random UUID.
+  // Must be an RFC 4122-compliant UUID.
   string invocation_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // A token that allows reading a stream of invocation events starting with an
