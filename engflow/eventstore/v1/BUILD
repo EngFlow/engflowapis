@@ -1,4 +1,15 @@
 proto_library(
+    name = "protos",
+    visibility = [
+        "//third_party/engflowapis/engflow:__pkg__",
+    ],
+    deps = [
+        ":build_event_proto",
+        ":eventstore_proto",
+    ],
+)
+
+proto_library(
     name = "build_event_proto",
     srcs = [
         "build_event.proto",
