@@ -8,7 +8,9 @@ to keep it free of clutter.
 
 ## Building
 
-Use [Bazel](https://bazel.build/) >= 4.x.
+Use [Bazel](https://bazel.build/) >= 5.x.
+
+> Note: older versions of Bazel may work as well, but are not officially supported.
 
 First, [install bazel](https://docs.bazel.build/versions/master/install.html).
 
