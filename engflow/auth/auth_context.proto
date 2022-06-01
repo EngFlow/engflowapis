@@ -1,0 +1,50 @@
+// Copyright 2022 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.auth;
+
+import "google/api/field_behavior.proto";
+import "engflow/auth/user.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "AuthContextProtos";
+option java_package = "com.engflow.auth.proto";
+
+// Represents an authentication context.
+//
+// An authentication context consists of two parts:
+//   - the `user`, and
+//   - optionally, an `agent` doing the request on behalf of the user.
+//
+// The user is always the (human) user responsible for the request. If the user
+// made the request themselves (e.g., because they ran a build against the
+// cluster from their machine), `agent` is not set.
+//
+// In case the user did not do the request themselves (e.g., because the request
+// is part of a CI build for a commit of the user), `agent` contains the
+// user authenticated against the cluster. I.e., `agent` is the user physically
+// authenticated against the cluster (e.g., because it's the `agent`'s mTLS
+// certificate) while `user` contains the logical user responsible for the
+// build.
+message AuthContext {
+  // The user responsible for the request.
+  engflow.auth.User user = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The agent making the request (on behalf of  `user`).
+  //
+  // If this is not set, the request was made by `user` themselves.
+  optional engflow.auth.User agent = 2 [(google.api.field_behavior) = OPTIONAL];
+}
