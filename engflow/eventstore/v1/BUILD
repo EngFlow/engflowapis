@@ -32,3 +32,14 @@ proto_library(
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
 )
+
+proto_library(
+    name = "notifications_proto",
+    srcs = [
+        "notifications.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//third_party/engflowapis/engflow/auth:auth_context_proto",
+    ],
+)
