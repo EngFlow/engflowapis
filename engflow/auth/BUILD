@@ -1,5 +1,3 @@
-load("//third_party/rules_closure/closure:defs.bzl", "closure_proto_library")
-
 proto_library(
     name = "auth_context_proto",
     srcs = [
