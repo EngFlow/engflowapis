@@ -12,6 +12,6 @@ exports_files(
 proto_descriptor_set(
     name = "proto_descriptor_set",
     deps = [
-        "//third_party/engflowapis/engflow:protos",
+        "//engflow:protos",
     ],
 )
