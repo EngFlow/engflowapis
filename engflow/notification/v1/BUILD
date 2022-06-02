@@ -29,7 +29,7 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         ":notification_proto",
-        "@com_google_googleapis//:google_rpc_status_proto",
+        "@com_google_googleapis//google/rpc:status_proto",
         "@com_google_protobuf//:duration_proto",
     ],
 )
