@@ -1,0 +1,46 @@
+// Copyright 2022 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.notification.v1;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "NotificationProtos";
+option java_package = "com.engflow.notification.v1";
+
+// Represents a single notification.
+//
+// This is primarily a container around an untyped payload, but also provides
+// additional metadata like an unique identifier for the notification or the
+// timestamp when the notification has been published.
+message Notification {
+  // A unique id identifying this notification.
+  //
+  // This is always an RFC 4122-compliant UUID.
+  string id = 1;
+
+  // The timestamp when the message was published.
+  google.protobuf.Timestamp timestamp = 2;
+
+  // Reserved for future use.
+  reserved 3;
+  reserved "keywords";
+
+  // The payload of the notification.
+  google.protobuf.Any payload = 4;
+}

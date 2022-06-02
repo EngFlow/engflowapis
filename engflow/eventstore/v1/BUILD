@@ -6,6 +6,7 @@ proto_library(
     deps = [
         ":build_event_proto",
         ":eventstore_proto",
+        ":notifications_proto",
     ],
 )
 

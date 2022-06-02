@@ -1,0 +1,197 @@
+// Copyright 2022 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.notification.v1;
+
+import "google/protobuf/duration.proto";
+import "google/rpc/status.proto";
+import "engflow/notification/v1/notification.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "NotificationQueueProtos";
+option java_package = "com.engflow.notification.v1";
+
+// A notification queue stores messages ("notifications") from publishers
+// ("writers"), delivering them to subscribers ("readers").
+//
+// All notifications delivered to a reader *MUST* be acknowledged by the reader
+// within the acknowledgement window specified when opening the reading
+// connection for the queue. During the acknowledgement window, the notification
+// queue *MUST NOT* deliver the notification to the same or any other reader.
+// Once a notification is acknowledged by the reader, the notification queue
+// *MUST NOT* deliver the notification again (i.e. acknowledging a notification
+// permanently removes it from the queue). In case readers fail to acknowledge
+// (either by sending the acknowledgement late or not at all), the notification
+// becomes eligible for re-delivery and the notification queue *MUST* deliver it
+// again (to the same or any other reader). In other words, notifications are
+// delivered at least once, and, if readers successfully acknowledge
+// notifications the first time they are delivered, exactly once.
+//
+// In case there are multiple concurrent readers pulling from a single
+// notification queue, notification queues *MUST* deliver individual
+// notifications only to one reader, not to all of them. (i.e.  multiple
+// concurrent readers load-balance processing the notifications). Notifications
+// queues *MAY* deliver notifications to any reader currently pulling from the
+// queue.
+//
+// Notifications queues *MAY* impose a limit to how many notifications they send
+// to a reader before waiting for some of them to be acknowledged before sending
+// more notifications to the same reader.
+//
+// Notification queues *MAY* terminate the connection at any time and for any
+// reason (including, but not limited to, the reader failing to acknowledge
+// notifications within the specified window). Readers *SHOULD* reconnect to the
+// notification queue in this case if they are still interested in receiving
+// notifications.
+//
+// Notification queues *MAY* refuse to accept more elements if there are too
+// many undelivered notifications.
+//
+// Notification queues *MAY* discard notifications queued for too long, or those
+// that failed to get delivered too many times.
+service NotificationQueue {
+  // Retrieves notifications from a queue.
+  //
+  // This adds a reading and to the notification queue.
+  //
+  // In addition to the generic restrictions on acknowledgement defined above,
+  // readers *MUST* also acknowledge notifications over the same gRPC connection
+  // they received it over. It is not possible to receive notifications over one
+  // gRPC connection and send the acknowledgement over another gRPC connection.
+  //
+  // Servers will send an `AcknowledgementReceipt` for every acknowledgement
+  // token they receive to signal that the notification was indeed acknowledged,
+  // or why the acknowledgement failed.
+  //
+  // An error will be reported in the following cases:
+  //   * `INVALID_ARGUMENT`: The request is invalid (e.g., did not specify a
+  //                         queue ID).
+  //   * `NOT_FOUND`: The queue with the specified ID does not exist.
+  rpc Pull(stream PullNotificationRequest)
+      returns (stream PullNotificationResponse) {}
+}
+
+// A unique identifier for a queue.
+message QueueId {
+  // For future use.
+  reserved 1;
+  reserved "instance_name";
+
+  // The name of the notification queue.
+  string name = 2;
+}
+
+// Options for how the server should deliver notifications to this client.
+message NotificationDeliveryOptions {
+  // The deadline for receiving acknowledgement tokens for notifications sent to
+  // the client. Must be between 30 seconds and 5 minutes (300 seconds).
+  //
+  // If not set, the server will use its default of 60s before delivering a
+  // notification again.
+  //
+  // If the client fails to acknowledge a notification within this deadline, the
+  // server will attempt to re-deliver the notification.
+  optional google.protobuf.Duration acknowledgement_deadline = 1;
+}
+
+// Request type for `NotificationQueue/Pull`. Provides options how to deliver
+// notifications to this client in the initial request and acknowledgement
+// tokens for delivered notifications in subsequent requests.
+message PullNotificationRequest {
+  // The queue to pull messages from.
+  //
+  // This *MUST* be set on the first request, and *MAY* be set on subsequent
+  // requests. If set on subsequent requests, it *MUST* have the same value as
+  // in the initial request.
+  optional QueueId queue = 1;
+
+  // The identifier of the client pulling notifications.
+  //
+  // This is primarily used for tracing which client received the notification
+  // in case there are multiple clients concurrently pulling from a queue.
+  //
+  // This *MUST* be set on the first request, and *MAY* be set on subsequent
+  // requests. If set on subsequent requests, it *MUST* have the same value as
+  // in the initial request.
+  //
+  // This *MUST* follow the following grammar and be *at most* 128 characters:
+  //
+  // `((([a-z][a-z0-9]*|[a-z]([a-z0-9]*-)*[a-z0-9]+)/)*)<uuid>`.
+  //
+  // <client>            -> (<namespace>)<uuid>
+  // <namespace>         -> <ns-identifier><slash>(<namespace>)
+  // <ns-identifier>     -> <identifier><dash>(<ns-identifier>)
+  // <dash>              -> -
+  // <identifier>        -> <alpha>(<identifier-suffix>)
+  // <identifier-suffix> -> <alphanum>(<identifier-suffix>)
+  // <alpha>             -> [a-z]
+  // <alphanum>          -> [a-z0-9]
+  optional string client = 2;
+
+  // Options for how the server should deliver notifications to the client.
+  //
+  // This *MAY* be set on the first request, and, if set on subsequent requests,
+  // *MUST* have the same value as in the initial request.
+  optional NotificationDeliveryOptions notification_delivery_options = 3;
+
+  // The acknowledgement tokens of messages to mark as received.
+  //
+  // This *MUST NOT* be set on the first request and *MAY* be set on subsequent
+  // requests. Tokens provided in this field *MUST NOT* come from other streams
+  // (i.e. it is not possible to acknowledge messages from a different stream
+  // for the same queue, or on a new connection if the old stream has been
+  // interrupted). Clients are not required to send the acknowledgement tokens
+  // in the same order they received the messages.
+  repeated string acknowledgement_tokens = 4;
+}
+
+// Response type for `NotificationQueue/Pull`. Provides notifications to the
+// client.
+message PullNotificationResponse {
+  message AcknowledgeableNotification {
+    // A token for acknowledging that the notification has been received.
+    //
+    // This is different from the ID of the notification. If a notification is
+    // delivered multiple times, it will have the same ID, but the
+    // acknowledgement token may be different.
+    //
+    // Users must not assume any structure for this token.
+    string token = 1;
+
+    // Reserved for future use.
+    reserved 2;
+    reserved "delivery_attempt";
+
+    // The actual notification.
+    Notification notification = 3;
+  }
+  optional AcknowledgeableNotification notification = 1;
+
+  // The server's acknowledgement of the reader's acknowledgement.
+  message AcknowledgementReceipt {
+    // The acknowledgement token this is a receipt for.
+    string token = 1;
+
+    // The result of the acknowledgement.
+    //
+    // If this `OK`, the notification was successfully acknowledged and is no
+    // longer eligible for re-delivery. Any other status indicates that the
+    // acknowledgement failed (e.g., if the acknowledgement was sent late, the
+    // server would return `DEADLINE_EXCEEDED`.
+    google.rpc.Status status = 2;
+  }
+  repeated AcknowledgementReceipt acknowledgement_receipt = 2;
+}
