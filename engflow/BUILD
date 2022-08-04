@@ -1,7 +1,7 @@
 proto_library(
     name = "protos",
     visibility = [
-        "//:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         "//engflow/auth:protos",

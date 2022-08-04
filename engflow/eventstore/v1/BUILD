@@ -1,7 +1,7 @@
 proto_library(
     name = "protos",
     visibility = [
-        "//engflow:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         ":build_event_proto",

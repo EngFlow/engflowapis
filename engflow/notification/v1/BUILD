@@ -1,7 +1,7 @@
 proto_library(
     name = "protos",
     visibility = [
-        "//engflow:__pkg__",
+        "//visibility:public",
     ],
     deps = [
         ":notification_proto",
