@@ -34,7 +34,7 @@ We recommend to download a specific commit from GitHub and then store and refere
 it in any storage service. To do so, you may download a repository `zip` file using a
 commit sha:
 
-```
+```bash
 wget "https://github.com/EngFlow/engflowapis/archive/47aa858b498da13e7863356aaef9c6d05da0a7f2.zip"
 ```
 
