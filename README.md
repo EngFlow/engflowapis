@@ -4,7 +4,7 @@ This repository contains the gRPC service definitions for public EngFlow APIs:
 
 - **authentication API**
 - **notification queue API**
-- **eventstore API**.
+- **eventstore API**
 
 This repository intentionally does not provide generated code for any languages
 to keep it free of clutter. In other words,  it only provides
@@ -30,24 +30,8 @@ bazel build //...
 In order to integrate the `engflowapis` into your Bazel project, you should
 include it using `http_archive`.
 
-We recommend to download a specific commit from GitHub and then store and reference
-it in any storage service. To do so, you may download a repository `zip` file using a
-commit sha:
-
-```bash
-wget "https://github.com/EngFlow/engflowapis/archive/47aa858b498da13e7863356aaef9c6d05da0a7f2.zip"
-```
-
-This, for instance, downloads the repository in its commit sha `47aa858b498da13e7863356aaef9c6d05da0a7f2`.
-The repository may be used locally using Bazel's [local_repository](https://bazel.build/reference/be/workspace#local_repository).
-However, it is recommended to store the file in a highly available storage service in such a way
-that you can use `http_archive` like this
-
-
-```
-...
+```bzl
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-...
 http_archive(
     name = "com_engflow_engflowapis",
     sha256 = "a04a2d2a978355c85dff8b1018d12a8e0a1e6692add9de716fd4d1b7aa1e2a0d",
