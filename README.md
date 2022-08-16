@@ -29,17 +29,17 @@ bazel build //...
 In order to integrate the `engflowapis` into your Bazel project, you should
 include it using `http_archive`.
 
-Alternatively, you may use a specific commit from GitHub and then store and reference
-it in any storage service. To do so, you may download a zip file using a
-commit sha and with the GitHub API:
+We recommend to download a specific commit from GitHub and then store and reference
+it in any storage service. To do so, you may download a repository `zip` file using a
+commit sha:
 
 ```
 wget "https://github.com/EngFlow/engflowapis/archive/47aa858b498da13e7863356aaef9c6d05da0a7f2.zip"
 ```
 
-This will download the repository in its commit sha `47aa858b498da13e7863356aaef9c6d05da0a7f2`.
+This, for instance, downloads the repository in its commit sha `47aa858b498da13e7863356aaef9c6d05da0a7f2`.
 The repository may be used locally using Bazel's [local_repository](https://bazel.build/reference/be/workspace#local_repository).
-However, it is recommended to store the file in a fast storage service in such a way
+However, it is recommended to store the file in a highly available storage service in such a way
 that you can use `http_archive` like this
 
 
