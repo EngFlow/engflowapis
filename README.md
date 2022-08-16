@@ -9,12 +9,11 @@ to keep it free of clutter. In other words,  it only provides
 
 ## Building
 
-In order to build the library you should count with a [Bazel](https://bazel.build/)
-installation with version **>= 5.x**. 
+Use [Bazel](https://bazel.build/) 5.x (or higher) to build the library.
 Older versions of Bazel may work as well, but are not officially supported.
-If you do not count with Bazel in your system,
-we recommend to install [bazelisk](https://github.com/bazelbuild/bazelisk) which uses by default the last stable
-version of the building system.
+If you do not have Bazel installed already, we recommend installing
+[bazelisk](https://github.com/bazelbuild/bazelisk),
+which automatically fetches the latest stable version of Bazel by default.
 
 To build all libraries run:
 
@@ -22,34 +21,10 @@ To build all libraries run:
 bazel build //...
 ```
 
-## Using the APIs in your (bazel) project
+## Using the APIs in your Bazel project
 
 In order to integrate the `engflowapis` into your Bazel project, you should
-include it using one of two bazel methods; 
-`git_repository` or `http_archive`.
-
-### Download with git_repository
-
-Include the `engflowapis` by adding the following instruction to your `WORKSPACE`
-file in your root directory:
-
-```
-...
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
-...
-git_repository(
-    name = "com_engflow_engflowapis",
-    branch = "main",
-    remote = "https://github.com/EngFlow/engflowapis",
-)
-```
-
-This command will fetch a fresh copy of the repository and link it with 
-the name `com_engflow_engflowapis`. Be aware that this command downloads all
-history from the repository, but you can configure it to fetch only 
-a given commit (see [git_repository](https://bazel.build/rules/lib/repo/git) for more info).
-
-### Download with http_archive
+include it using `http_archive`.
 
 Alternatively, you may use a specific commit from GitHub and then store and reference
 it in any storage service. To do so, you may download a zip file using a
@@ -88,4 +63,6 @@ the name `com_engflow_engflowapis`.
 You should use the protocol buffer definitions from the `engflowapis`. In here,
 you need to include building blocks such as `protocol buffer` tools and `googleapis` definitions.
 Check out the full working [engflow example](https://github.com/EngFlow/example), 
-that uses the notification queue and event store APIs, to get a better understanding.
+that uses the 
+[notification queue and event store APIs](https://github.com/EngFlow/example/tree/main/java/com/engflow/notificationqueue),
+to get a better understanding.
