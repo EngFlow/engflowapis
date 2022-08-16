@@ -3,19 +3,49 @@
 This repository contains the gRPC service definitions for public EngFlow APIs.
 
 This repository intentionally does not provide generated code for any languages
-to keep it free of clutter.
+to keep it free of clutter. In other words,  it only provides
+[protocol buffers](https://developers.google.com/protocol-buffers) definitions.
 
 
 ## Building
 
-Use [Bazel](https://bazel.build/) >= 5.x.
+Use [Bazel](https://bazel.build/) 5.x (or higher) to build the library.
+Older versions of Bazel may work as well, but are not officially supported.
+If you do not have Bazel installed already, we recommend installing
+[bazelisk](https://github.com/bazelbuild/bazelisk),
+which automatically fetches the latest stable version of Bazel by default.
 
-> Note: older versions of Bazel may work as well, but are not officially supported.
+To build all libraries run:
 
-First, [install bazel](https://docs.bazel.build/versions/master/install.html).
-
-To build all libraries:
-
-```
+```bash
 bazel build //...
 ```
+
+## Using the APIs in your Bazel project
+
+In order to integrate the `engflowapis` into your Bazel project, you should
+include it using `http_archive`.
+
+```bzl
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "com_engflow_engflowapis",
+    sha256 = "a04a2d2a978355c85dff8b1018d12a8e0a1e6692add9de716fd4d1b7aa1e2a0d",
+    strip_prefix = "engflowapis-47aa858b498da13e7863356aaef9c6d05da0a7f2",
+    urls = [
+        "https://github.com/EngFlow/engflowapis/archive/47aa858b498da13e7863356aaef9c6d05da0a7f2.zip",
+    ],
+)
+```
+
+This command will fetch a fresh copy of the repository and link it with
+the name `com_engflow_engflowapis`.
+
+### Check out a full example
+
+You should use the protocol buffer definitions from the `engflowapis`. In here,
+you need to include building blocks such as `protocol buffer` tools and `googleapis` definitions.
+Check out the full working [engflow example](https://github.com/EngFlow/example),
+that uses the
+[notification queue and event store APIs](https://github.com/EngFlow/example/tree/main/java/com/engflow/notificationqueue),
+to get a better understanding.
