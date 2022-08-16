@@ -1,7 +1,10 @@
 # EngFlow APIs
 
-This repository contains the gRPC service definitions for public EngFlow APIs;
-the **authentication API**, **notification queue API** and the **eventstore API**.
+This repository contains the gRPC service definitions for public EngFlow APIs:
+
+- **authentication API**
+- **notification queue API**
+- **eventstore API**.
 This repository intentionally does not provide generated code for any languages
 to keep it free of clutter. In other words,  it only provides
 [protocol buffers](https://developers.google.com/protocol-buffers) definitions.
