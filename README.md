@@ -20,7 +20,7 @@ which automatically fetches the latest stable version of Bazel by default.
 
 To build all libraries run:
 
-```
+```bash
 bazel build //...
 ```
 
