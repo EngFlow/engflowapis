@@ -23,8 +23,13 @@ bazel build //...
 
 ## Using the APIs in your Bazel project
 
-In order to integrate the `engflowapis` into your Bazel project, you should
-include it using `http_archive`.
+To integrate against `engflowapis` from your Bazel project, you must change your
+`WORKSPACE` and `BUILD` files as follows.
+
+### `WORKSPACE`
+
+Include the API in your `WORKSPACE` using `http_archive` and a given commit sha
+(look for the latest one at [engflowapis commit history])
 
 ```bzl
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -38,14 +43,64 @@ http_archive(
 )
 ```
 
-This command will fetch a fresh copy of the repository and link it with
-the name `com_engflow_engflowapis`.
+This links the `engflowapis` definitions under the name `com_engflow_engflowapis`.
+
+### `BUILD`
+
+#### `java` example
+
+Include the API in your `BUILD` using the rules `java_proto_library`
+and `java_grpc_library` from `io.grpc`. First declare the java proto library by adding as dependency
+each of the required proto definitions, for instance
+
+```bzl
+load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
+
+java_proto_library(
+    name = "engflowapis_java_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_engflow_engflowapis//engflow/auth:user_proto",
+        "@com_engflow_engflowapis//engflow/eventstore/v1:eventstore_proto",
+        "@com_engflow_engflowapis//engflow/eventstore/v1:notifications_proto",
+        "@com_engflow_engflowapis//engflow/notification/v1:notification_queue_proto",
+    ],
+)
+```
+
+Then add a java grpc library for each grpc service
+
+```bzl
+java_grpc_library(
+    name = "notification_queue_java_grpc",
+    srcs = [
+        "@com_engflow_engflowapis//engflow/notification/v1:notification_queue_proto",
+    ],
+    deps = [
+        ":engflowapis_java_proto",
+    ],
+)
+
+java_grpc_library(
+    name = "eventstore_java_grpc",
+    srcs = [
+        "@com_engflow_engflowapis//engflow/eventstore/v1:eventstore_proto",
+    ],
+    deps = [
+        ":engflowapis_java_proto",
+    ],
+)
+```
+
+Finally, include all three libraries into the dependency array of your targets.
 
 ### Check out a full example
 
-You should use the protocol buffer definitions from the `engflowapis`. In here,
+Given that protocol buffer definitions from the `engflowapis` are used,
 you need to include building blocks such as `protocol buffer` tools and `googleapis` definitions.
-Check out the full working [engflow example](https://github.com/EngFlow/example),
+Check out a full working [engflow example](https://github.com/EngFlow/example),
 that uses the
 [notification queue and event store APIs](https://github.com/EngFlow/example/tree/main/java/com/engflow/notificationqueue),
-to get a better understanding.
+to get a better understanding on how use the API.
+
+[engflowapis commit history]: https://github.com/EngFlow/engflowapis/commits/main
