@@ -1,0 +1,44 @@
+// Copyright 2022 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.type;
+
+import "google/api/field_behavior.proto";
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/type;engflowtype";
+
+option java_multiple_files = true;
+option java_outer_classname = "CompactDigestProtos";
+option java_package = "com.engflow.type.proto";
+
+// A compact representation of a content digest. A digest for a given blob
+// consists of the size of the blob, its hash, and the name of the hashing
+// algorithm that produced the hash.
+//
+// Wire format of `com.engflow.type.CompactDigest`.
+message CompactDigest {
+  // The hash of the blob in binary representation. As of 2022-01-26, this is
+  // always a SHA-256 hash and 32 bytes long.
+  bytes hash = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The size of the blob, in bytes.
+  uint64 size_bytes = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The algorithm that produced the hash. As of 2022-01-26, this is always
+  // SHA-256.
+  reserved 3;
+  reserved "algorithm";
+}
