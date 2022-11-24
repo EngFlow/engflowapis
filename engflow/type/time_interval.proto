@@ -14,20 +14,25 @@
 
 syntax = "proto3";
 
-package engflow.auth;
+package engflow.type;
 
 import "google/api/field_behavior.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/auth;engflowauth";
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/type;engflowtype";
 
 option java_multiple_files = true;
-option java_outer_classname = "UserProtos";
-option java_package = "com.engflow.auth.proto";
+option java_outer_classname = "TimeIntervalProtos";
+option java_package = "com.engflow.type.proto";
 
-// Represents a user.
-message User {
-  // The principal of this user.
-  //
-  // This uniquely identifies a user.
-  string principal = 1 [(google.api.field_behavior) = REQUIRED];
+// Represents a fixed-length span of time at a specific point in time.
+message TimeInterval {
+  // Start time of the time interval.
+  google.protobuf.Timestamp start_time = 1
+      [(google.api.field_behavior) = REQUIRED];
+
+  // Duration of the time interval.
+  google.protobuf.Duration duration = 2
+      [(google.api.field_behavior) = REQUIRED];
 }

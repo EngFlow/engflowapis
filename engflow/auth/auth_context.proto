@@ -19,6 +19,8 @@ package engflow.auth;
 import "google/api/field_behavior.proto";
 import "engflow/auth/user.proto";
 
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/auth;engflowauth";
+
 option java_multiple_files = true;
 option java_outer_classname = "AuthContextProtos";
 option java_package = "com.engflow.auth.proto";

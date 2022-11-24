@@ -20,6 +20,8 @@ import "google/api/field_behavior.proto";
 import "google/devtools/build/v1/build_events.proto";
 import "google/devtools/build/v1/publish_build_event.proto";
 
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/eventstore/v1;eventstorev1";
+
 option java_multiple_files = true;
 option java_outer_classname = "BuildEventProtos";
 option java_package = "com.engflow.eventstore.v1";

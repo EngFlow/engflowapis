@@ -18,3 +18,16 @@ proto_library(
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
 )
+
+proto_library(
+    name = "time_interval_proto",
+    srcs = [
+        "time_interval.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_googleapis//google/api:field_behavior_proto",
+        "@com_google_protobuf//:duration_proto",
+        "@com_google_protobuf//:timestamp_proto",
+    ],
+)
