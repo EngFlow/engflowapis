@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package engflow.resultstore.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "engflow/resultstore/v1/invocation.proto";
+
+// A query for many invocations.
+// Next index: 19
+message InvocationQuery {
+  // Only include invocations that match one of the provided ids.
+  repeated string invocation_id = 15;
+
+
+  // Only include invocations that were created before this time.
+  google.protobuf.Timestamp created_before = 1;
+
+  // Only include invocations that were created after this time.
+  google.protobuf.Timestamp created_after = 2;
+
+}

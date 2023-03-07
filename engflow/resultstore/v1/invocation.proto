@@ -1,0 +1,214 @@
+syntax = "proto3";
+
+package engflow.resultstore.v1;
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "engflow/resultstore/v1/agent.proto";
+
+
+option java_multiple_files = true;
+option java_outer_classname = "InvocationProtos";
+option java_package = "com.engflow.resultstore.v1";
+
+// The overall status of an invocation.
+enum InvocationStatus {
+  // The invocation has been enqueued and will start shortly.
+  ENQUEUED = 0;
+
+  // The invocation is currently running.
+  RUNNING = 1;
+
+  // The invocation has finished successfully.
+  SUCCEEDED = 2;
+
+  // The invocation has finished with a generic failure that cannot be described
+  // as a build or test failure.
+  GENERIC_FAILURE = 9;
+
+  // The invocation has finished with one or more build failures.
+  BUILD_FAILED = 3;
+
+  // The invocation finished with one or more test failures.
+  TEST_FAILED = 6;
+
+  // The invocation was cancelled before it could complete.
+  CANCELLED = 4;
+
+  // The BEP stream was disconnected before completing.
+  STREAM_INCOMPLETE = 7;
+
+  // A system failure caused this invocation to fail.
+  SYSTEM_FAILURE = 8;
+
+  // The status is not known.
+  UNKNOWN = 5;
+}
+
+// The service level of the invocation.
+enum ServiceLevel {
+  // Non-interactive builds can tolerate longer event latencies. This is the
+  // default ServiceLevel if callers do not specify one.
+  NONINTERACTIVE = 0;
+
+  // The events of an interactive build should be delivered with low latency.
+  INTERACTIVE = 1;
+}
+
+// Where an invocation was executed.
+enum ExecutionLocation {
+  // The invocation was executed fully on the client machine.
+  LOCAL = 0;
+
+  // The invocation was executed fully on remote execution.
+  REMOTE = 1;
+
+  // The invocation was executed on the client machine and on remote execution.
+  MIXED = 2;
+}
+
+// Information about the build tool producing the invocation.
+message BuildTool {
+  // The name of the build tool that created this invocation.
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The version of the build tool that created this invocation.
+  string version = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Contains information about the environment of the invocation.
+message InvocationEnvironmentInformation {
+  message CiCdSystem {
+    // The name of the CI/CD pipeline.
+    //
+    // This is populated by the `engflow:CiCdPipelineName` BES keyword.
+    optional string pipeline_name = 1;
+
+    // The name of the job within the CI/CD pipeline.
+    //
+    // This is populated from the `engflow:CiCdJobName` BES keyword.
+    optional string job_name = 2;
+
+    // The URI of the invocation in the CI/CD pipeline.
+    //
+    // This is populated from the `engflow:CiCdUri` BES keyword.
+    optional string uri = 3;
+  }
+  optional CiCdSystem ci_cd_system = 1;
+}
+
+// Generic metadata about an invocation.
+message InvocationMetadata {
+  // The interactivity of this build.
+  ServiceLevel service_level = 1;
+
+  // The time of the invocation started (i.e. enqueued).
+  google.protobuf.Timestamp start_time = 2
+      [(google.api.field_behavior) = REQUIRED];
+
+  // The time the invocation ended (either successfully or with an error).
+  //
+  // Set iff the invocation has finished.
+  optional google.protobuf.Timestamp end_time = 3
+      [(google.api.field_behavior) = OPTIONAL];
+
+  // Information about the environment of the invocation.
+  optional InvocationEnvironmentInformation environment_information = 4
+      [(google.api.field_behavior) = OPTIONAL];
+
+
+  // The aggregated remote resource usage data for the invocation
+  optional RemoteResourceUsageSummary remote_resource_usage_summary = 5
+      [(google.api.field_behavior) = OPTIONAL];
+}
+
+
+// Information about an invocation.
+// Next id: 12
+message Invocation {
+  // The id of this invocation.
+  string invocation_id = 1;
+
+  // The id of a the build this invocation is part of.
+  string build_id = 2;
+
+  // The overall status of the invocation.
+  InvocationStatus status = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Description of why an invocation was aborted.
+  string abort_description = 11 [(google.api.field_behavior) = OPTIONAL];
+
+  // Where this invocation was executed.
+  ExecutionLocation location = 9;
+
+  // The build tool running this invocation.
+  //
+  // TODO(yannic): Can we make this required?
+  BuildTool build_tool = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // The exit code returned by the build tool, if any.
+  int32 exit_code = 10 [(google.api.field_behavior) = OPTIONAL];
+
+  // Agents involved with this invocation.
+  InvocationAgents agents = 8 [(google.api.field_behavior) = OPTIONAL];
+
+  // Metadata about the overall invocation (e.g. start time or end time).
+  InvocationMetadata invocation_metadata = 5
+      [(google.api.field_behavior) = REQUIRED];
+
+}
+
+// A summary of remote execution resources consumed by an invocation.
+//
+// All summary data is derived from the invocations.
+message RemoteResourceUsageSummary {
+  // Artifacts are summarized at the invocation level, as summarizing at the
+  // pool level can result in bytes being counted multiple times. This would
+  // skew the summary, as artifacts are stored uniquely and, in many cases, do
+  // not incur bandwidth costs when being copied to an executor.
+
+  // Aggregation of all artifact inputs of actions run in a pool.
+  // "inputs" in conjunction with "outputs" can be used to calculate the
+  // approximate amount of bandwidth and storage used by an invocation.
+  ArtifactResourceSummary inputs = 6;
+
+  // Aggregation of all artifact outputs of actions run in all pools. "outputs"
+  // is separated from "inputs" to allow better analysis of cached actions.
+  ArtifactResourceSummary outputs = 7;
+
+  // Summarized resources consumed per pool.
+  repeated ExecutionPoolSummary pool_summary = 8;
+}
+
+// Summarizes the invocation resource consumption of a given pool.
+message ExecutionPoolSummary {
+  // Name of the executor pool.
+  string name = 1;
+
+  // Aggregate time of all actions execution. This includes execution, upload,
+  // and download phases.
+  //
+  // This can be used to attribute cpu consumption per invocation, per pool.
+  google.protobuf.Duration action_duration = 2;
+
+  // Number of actions executed, including retries.
+  int32 executed_actions = 3;
+
+  // Number of actions retried. Can be used to derive the number of non-retried
+  // actions using: executed_actions - retried_actions.
+  int32 retried_actions = 4;
+}
+
+// Summarizes artifacts resource usage for an invocation.
+//
+// Includes cached  artifacts as part of the aggregated totals. This ensures
+// that the resources used to find and return cached artifacts can be accounted
+// for.
+message ArtifactResourceSummary {
+  // Number of artifacts.
+  int32 count = 1;
+
+  // Aggregate number of bytes in all artifacts.
+  int64 bytes = 2;
+}

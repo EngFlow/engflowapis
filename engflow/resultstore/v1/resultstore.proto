@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package engflow.resultstore.v1;
+
+import "google/api/field_behavior.proto";
+import "engflow/resultstore/v1/invocation.proto";
+
+
+option java_multiple_files = true;
+option java_outer_classname = "ResultStoreProtos";
+option java_package = "com.engflow.resultstore.v1";
+
+// This is the interface used to retrieve build results from the `ResultStore`
+// service.
+service ResultStore {
+  // Retrieves a the result of the invocation with the provided ID.
+  //
+  // An error will be reported in the following cases:
+  //   * `INVALID_ARGUMENT`: The request is invalid (e.g., did not specify an
+  //                         invocation ID).
+  //   * `NOT_FOUND`: An invocation with the specified ID does not exist.
+  rpc GetInvocation(GetInvocationRequest) returns (stream StreamedInvocation) {}
+
+}
+
+// A request message for `ResultStore/GetInvocation`.
+message GetInvocationRequest {
+  // The instance of the ResultStore service to operate against. A server may
+  // support multiple instances of the ResultStore service on the same gRPC
+  // endpoint. The server MAY require use of this field to select between them
+  // in an implementation-defined fashion, otherwise it can be omitted.
+  string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
+
+  // The ID of the invocation to retrieve.
+  //
+  // Must be an RFC 4122-compliant random UUID.
+  string invocation_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message StreamedInvocation {
+  // Indicates that this is the last update.
+  bool is_last = 1;
+
+  Invocation invocation = 2 [(google.api.field_behavior) = REQUIRED];
+}
+

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package engflow.resultstore.v1;
+
+import "google/api/field_behavior.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "AgentProtos";
+option java_package = "com.engflow.resultstore.v1";
+
+// Information about an agent that performed an action with respect to the
+// cluster.
+message Agent {
+  // The principal of this agent.
+  string principal = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Details about the agents involved in an invocation.
+message InvocationAgents {
+  // The agent that ran an invocation. This agent was authenticated to the
+  // EngFlow cluster. e.g. "user@acme.corp" or "CI machine instance 1234"
+  Agent runner = 1;
+
+  // The agent that requested an invocation.
+  // e.g. "user@acme.corp" or "CI pipeline"
+  Agent requester = 2;
+}
