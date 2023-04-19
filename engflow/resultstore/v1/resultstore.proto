@@ -1,3 +1,17 @@
+// Copyright 2023 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 syntax = "proto3";
 
 package engflow.resultstore.v1;
@@ -5,10 +19,9 @@ package engflow.resultstore.v1;
 import "google/api/field_behavior.proto";
 import "engflow/resultstore/v1/invocation.proto";
 
-
 option java_multiple_files = true;
 option java_outer_classname = "ResultStoreProtos";
-option java_package = "com.engflow.resultstore.v1";
+option java_package = "com.engflow.resultstore.v1.proto";
 
 // This is the interface used to retrieve build results from the `ResultStore`
 // service.
@@ -20,7 +33,6 @@ service ResultStore {
   //                         invocation ID).
   //   * `NOT_FOUND`: An invocation with the specified ID does not exist.
   rpc GetInvocation(GetInvocationRequest) returns (stream StreamedInvocation) {}
-
 }
 
 // A request message for `ResultStore/GetInvocation`.
@@ -43,4 +55,3 @@ message StreamedInvocation {
 
   Invocation invocation = 2 [(google.api.field_behavior) = REQUIRED];
 }
-

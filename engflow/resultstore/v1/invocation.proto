@@ -1,3 +1,17 @@
+// Copyright 2023 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 syntax = "proto3";
 
 package engflow.resultstore.v1;
@@ -7,10 +21,9 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "engflow/resultstore/v1/agent.proto";
 
-
 option java_multiple_files = true;
 option java_outer_classname = "InvocationProtos";
-option java_package = "com.engflow.resultstore.v1";
+option java_package = "com.engflow.resultstore.v1.proto";
 
 // The overall status of an invocation.
 enum InvocationStatus {
@@ -117,12 +130,10 @@ message InvocationMetadata {
   optional InvocationEnvironmentInformation environment_information = 4
       [(google.api.field_behavior) = OPTIONAL];
 
-
   // The aggregated remote resource usage data for the invocation
   optional RemoteResourceUsageSummary remote_resource_usage_summary = 5
       [(google.api.field_behavior) = OPTIONAL];
 }
-
 
 // Information about an invocation.
 // Next id: 12
@@ -156,7 +167,6 @@ message Invocation {
   // Metadata about the overall invocation (e.g. start time or end time).
   InvocationMetadata invocation_metadata = 5
       [(google.api.field_behavior) = REQUIRED];
-
 }
 
 // A summary of remote execution resources consumed by an invocation.

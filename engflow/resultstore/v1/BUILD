@@ -1,20 +1,39 @@
 proto_library(
-    name = "agent_proto",
-    srcs = ["agent.proto"],
-    visibility = ["//visibility:public"],
-    deps = ["@com_google_googleapis//google/api:field_behavior_proto"],
+    name = "protos",
+    visibility = [
+        "//engflow:__pkg__",
+    ],
+    deps = [
+        ":agent_proto",
+        ":invocation_entry_proto",
+        ":invocation_index_proto",
+        ":invocation_proto",
+        ":invocation_query_proto",
+        ":resultstore_proto",
+    ],
 )
 
 proto_library(
-    name = "index_proto",
+    name = "agent_proto",
+    srcs = [
+        "agent.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
+)
+
+proto_library(
+    name = "invocation_index_proto",
     srcs = [
         "invocation_index.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":entry_proto",
+        ":invocation_entry_proto",
         ":invocation_proto",
-        ":query_proto",
+        ":invocation_query_proto",
         "//engflow/type:compact_digest_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
         "@com_google_protobuf//:timestamp_proto",
@@ -22,7 +41,7 @@ proto_library(
 )
 
 proto_library(
-    name = "entry_proto",
+    name = "invocation_entry_proto",
     srcs = [
         "invocation_entry.proto",
     ],
@@ -53,7 +72,7 @@ proto_library(
 )
 
 proto_library(
-    name = "query_proto",
+    name = "invocation_query_proto",
     srcs = [
         "invocation_query.proto",
     ],
