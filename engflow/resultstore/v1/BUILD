@@ -1,6 +1,7 @@
 proto_library(
     name = "agent_proto",
     srcs = ["agent.proto"],
+    visibility = ["//visibility:public"],
     deps = ["@com_google_googleapis//google/api:field_behavior_proto"],
 )
 
