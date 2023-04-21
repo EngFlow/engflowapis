@@ -32,11 +32,7 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         ":invocation_entry_proto",
-        ":invocation_proto",
         ":invocation_query_proto",
-        "//engflow/type:compact_digest_proto",
-        "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_protobuf//:timestamp_proto",
     ],
 )
 

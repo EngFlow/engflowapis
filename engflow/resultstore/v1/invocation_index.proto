@@ -16,7 +16,6 @@ syntax = "proto3";
 
 package engflow.resultstore.v1;
 
-import "google/protobuf/timestamp.proto";
 import "engflow/resultstore/v1/invocation_entry.proto";
 import "engflow/resultstore/v1/invocation_query.proto";
 
@@ -60,10 +59,4 @@ message SearchInvocationsResponse {
   // A continuation token that can be used to keep pages consistent when
   // paginating many results of a query.
   string continuation_token = 3;
-}
-
-message SearchInvocationContinuationToken {
-  oneof kind {
-    google.protobuf.Timestamp timestamp = 1;
-  }
 }
