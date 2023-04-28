@@ -44,6 +44,7 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         ":invocation_proto",
+        "//engflow/api:options_proto",
         "//engflow/type:compact_digest_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],

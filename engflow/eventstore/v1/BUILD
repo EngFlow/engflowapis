@@ -30,6 +30,7 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         ":build_event_proto",
+        "//engflow/api:options_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
 )

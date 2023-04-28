@@ -18,6 +18,7 @@ package engflow.notification.v1;
 
 import "google/protobuf/duration.proto";
 import "google/rpc/status.proto";
+import "engflow/api/options.proto";
 import "engflow/notification/v1/notification.proto";
 
 option go_package = "github.com/EngFlow/engflowapis-go/engflow/notification/v1;notificationv1";
@@ -65,6 +66,16 @@ option java_package = "com.engflow.notification.v1";
 // Notification queues *MAY* discard notifications queued for too long, or those
 // that failed to get delivered too many times.
 service NotificationQueue {
+  option (engflow.api.engflow_service) = {
+    launch_stage: BETA
+
+    availability {
+      product: "platform"
+
+      since { major: 2 minor: 2 patch: 0 }
+    }
+  };
+
   // Retrieves notifications from a queue.
   //
   // This adds a reading and to the notification queue.
@@ -83,7 +94,17 @@ service NotificationQueue {
   //                         queue ID).
   //   * `NOT_FOUND`: The queue with the specified ID does not exist.
   rpc Pull(stream PullNotificationRequest)
-      returns (stream PullNotificationResponse) {}
+      returns (stream PullNotificationResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: BETA
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 2 patch: 0 }
+      }
+    };
+  }
 }
 
 // A unique identifier for a queue.

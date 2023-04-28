@@ -17,6 +17,7 @@ syntax = "proto3";
 package engflow.resultstore.v1;
 
 import "google/api/field_behavior.proto";
+import "engflow/api/options.proto";
 import "engflow/resultstore/v1/invocation.proto";
 
 option java_multiple_files = true;
@@ -26,13 +27,33 @@ option java_package = "com.engflow.resultstore.v1.proto";
 // This is the interface used to retrieve build results from the `ResultStore`
 // service.
 service ResultStore {
+  option (engflow.api.engflow_service) = {
+    launch_stage: EARLY_ACCESS
+
+    availability {
+      product: "platform"
+
+      since { major: 2 minor: 37 patch: 0 }
+    }
+  };
+
   // Retrieves a the result of the invocation with the provided ID.
   //
   // An error will be reported in the following cases:
   //   * `INVALID_ARGUMENT`: The request is invalid (e.g., did not specify an
   //                         invocation ID).
   //   * `NOT_FOUND`: An invocation with the specified ID does not exist.
-  rpc GetInvocation(GetInvocationRequest) returns (stream StreamedInvocation) {}
+  rpc GetInvocation(GetInvocationRequest) returns (stream StreamedInvocation) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 37 patch: 0 }
+      }
+    };
+  }
 }
 
 // A request message for `ResultStore/GetInvocation`.

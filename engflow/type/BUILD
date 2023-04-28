@@ -5,6 +5,8 @@ proto_library(
     ],
     deps = [
         ":compact_digest_proto",
+        ":time_interval_proto",
+        ":version_proto",
     ],
 )
 
@@ -30,4 +32,12 @@ proto_library(
         "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:timestamp_proto",
     ],
+)
+
+proto_library(
+    name = "version_proto",
+    srcs = [
+        "version.proto",
+    ],
+    visibility = ["//visibility:public"],
 )

@@ -16,6 +16,7 @@ syntax = "proto3";
 
 package engflow.eventstore.v1;
 
+import "engflow/api/options.proto";
 import "google/api/field_behavior.proto";
 import "engflow/eventstore/v1/build_event.proto";
 
@@ -28,6 +29,16 @@ option java_package = "com.engflow.eventstore.v1";
 // This is the interface used to retrieve raw event streams from the EventStore
 // service.
 service EventStore {
+  option (engflow.api.engflow_service) = {
+    launch_stage: GENERAL_AVAILABILITY
+
+    availability {
+      product: "platform"
+
+      since { major: 2 minor: 2 patch: 0 }
+    }
+  };
+
   // Retrieves a BES stream with the given build ID.
   //
   // Note that this is conceptually different from `EventStore/StreamInvocation`
@@ -40,7 +51,17 @@ service EventStore {
   //   * `INVALID_ARGUMENT`: The request is invalid (e.g., did not specify an
   //                         build ID).
   //   * `NOT_FOUND`: A build with the specified build ID does not exist.
-  rpc GetBuild(GetBuildRequest) returns (stream StreamedBuildEvent) {}
+  rpc GetBuild(GetBuildRequest) returns (stream StreamedBuildEvent) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 36 patch: 0 }
+      }
+    };
+  }
 
   // Retrieves a BES stream with the given invocation ID.
   //
@@ -50,7 +71,17 @@ service EventStore {
   //   * `INVALID_ARGUMENT`: The request is invalid (e.g., did not specify an
   //                         invocation ID).
   //   * `NOT_FOUND`: A build with the specified invocation ID does not exist.
-  rpc GetInvocation(GetInvocationRequest) returns (stream StreamedBuildEvent) {}
+  rpc GetInvocation(GetInvocationRequest) returns (stream StreamedBuildEvent) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: GENERAL_AVAILABILITY
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 0 patch: 0 }
+      }
+    };
+  }
 }
 
 // Wrapper around `ReplayMode` to keep enum scoped.

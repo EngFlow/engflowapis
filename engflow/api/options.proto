@@ -1,0 +1,122 @@
+// Copyright 2023 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.api;
+
+import "google/protobuf/descriptor.proto";
+import "engflow/api/availability.proto";
+import "engflow/api/launch_stage.proto";
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/api;engflowapi";
+
+option java_multiple_files = true;
+option java_outer_classname = "AnnotationProtos";
+option java_package = "com.engflow.api.proto";
+
+// Engflow specific [Protocol Buffer
+// options](https://developers.google.com/protocol-buffers/docs/proto#customoptions).
+//
+// Extension ID 1181 is registered at
+// https://github.com/protocolbuffers/protobuf/blob/main/docs/options.md
+
+// EngFlow specific options for `.proto` files.
+message FileOptions {
+  // Empty for now.
+}
+
+// EngFlow specific options for messages.
+message MessageOptions {
+  // Empty for now.
+}
+
+// EngFlow specific options for fields in messages.
+message FieldOptions {
+  // Empty for now.
+}
+
+// EngFlow specific options for oneof fields in messages.
+message OneofOptions {
+  // Empty for now.
+}
+
+// EngFlow specific options for extension ranges of messages.
+message ExtensionRangeOptions {
+  // Empty for now.
+}
+
+// EngFlow specific options for emums.
+message EnumOptions {
+  // Empty for now.
+}
+
+// EngFlow specific options for enum values.
+message EnumValueOptions {
+  // Empty for now.
+}
+
+// EngFlow specific options for services.
+message ServiceOptions {
+  // Launch stage of the service.
+  engflow.api.LaunchStage.Value launch_stage = 1;
+
+  // Availability of the service (e.g., available since `v2.0.0`).
+  engflow.api.Availability availability = 2;
+}
+
+// EngFlow specific options for methods of services.
+message MethodOptions {
+  // Launch stage of the method.
+  engflow.api.LaunchStage.Value launch_stage = 1;
+
+  // Availability of the method (e.g., available since `v2.0.0`).
+  engflow.api.Availability availability = 2;
+}
+
+extend google.protobuf.FileOptions {
+  engflow.api.FileOptions engflow_file = 1181;
+}
+
+extend google.protobuf.MessageOptions {
+  engflow.api.MessageOptions engflow_message = 1181;
+}
+
+extend google.protobuf.FieldOptions {
+  engflow.api.FieldOptions engflow_field = 1181;
+}
+
+extend google.protobuf.OneofOptions {
+  engflow.api.OneofOptions engflow_oneof = 1181;
+}
+
+extend google.protobuf.ExtensionRangeOptions {
+  engflow.api.ExtensionRangeOptions engflow_externsion_range = 1181;
+}
+
+extend google.protobuf.EnumOptions {
+  engflow.api.EnumOptions engflow_enum = 1181;
+}
+
+extend google.protobuf.EnumValueOptions {
+  engflow.api.EnumValueOptions engflow_enum_value = 1181;
+}
+
+extend google.protobuf.ServiceOptions {
+  engflow.api.ServiceOptions engflow_service = 1181;
+}
+
+extend google.protobuf.MethodOptions {
+  engflow.api.MethodOptions engflow_method = 1181;
+}

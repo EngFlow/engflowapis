@@ -1,0 +1,55 @@
+// Copyright 2023 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.api;
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/api;engflowapi";
+
+option java_multiple_files = true;
+option java_outer_classname = "LaunchStageProtos";
+option java_package = "com.engflow.api.proto";
+
+// The launch stage of a specific feature.
+message LaunchStage {
+  enum Value {
+    // Do not use this default value.
+    UNSPECIFIED = 0;
+
+    // The feature is not yet implemented. Users can not use it.
+    UNIMPLEMENTED = 1;
+
+    // Early Access features are limited to a closed group of testers.
+    //
+    // These features may be unstable, changed in backward-incompatible ways,
+    // and are not guaranteed to be released.
+    //
+    // Reach out to your EngFlow contact if you are interested in testing the
+    // feature.
+    EARLY_ACCESS = 2;
+
+    // Beta features are available to all customers and can be considered to be
+    // generally stable, but they are not covered by any SLAs yet. Backward
+    // incompatible changes are unlikely for features that reach this stage.
+    BETA = 3;
+
+    // The feature is generally available for all customers and is covered by
+    // the applicable SLAs.
+    GENERAL_AVAILABILITY = 4;
+
+    // The feature is deprecated and will be removed in a future release.
+    DEPRECATED = 5;
+  }
+}

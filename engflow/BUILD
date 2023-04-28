@@ -4,6 +4,7 @@ proto_library(
         "//:__pkg__",
     ],
     deps = [
+        "//engflow/api:protos",
         "//engflow/auth:protos",
         "//engflow/eventstore/v1:protos",
         "//engflow/notification/v1:protos",
