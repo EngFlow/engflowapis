@@ -7,11 +7,20 @@ exports_files(
     visibility = ["//visibility:public"],
 )
 
+proto_library(
+    name = "protos",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//engflow:protos",
+    ],
+)
+
 # Proto descriptor set for all APIs and types defined in engflowapis (including
 # all transitive dependencies).
 proto_descriptor_set(
     name = "proto_descriptor_set",
+    visibility = ["//visibility:public"],
     deps = [
-        "//engflow:protos",
+        ":protos",
     ],
 )
