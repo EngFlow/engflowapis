@@ -1,0 +1,55 @@
+// Copyright 2023 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.cluster.v1;
+
+import "engflow/api/options.proto";
+import "engflow/type/version.proto";
+import "google/api/field_behavior.proto";
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/cluster/v1;clusterv1";
+
+option java_multiple_files = true;
+option java_outer_classname = "ClusterProtos";
+option java_package = "com.engflow.cluster.v1";
+
+service Cluster {
+  option (engflow.api.engflow_service) = {
+    launch_stage: UNIMPLEMENTED
+
+    // TODO(yannic): Add availability when it's implemented.
+  };
+
+  // Returns info about the cluster.
+  rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: UNIMPLEMENTED
+
+      // TODO(yannic): Add availability when it's implemented.
+    };
+  }
+}
+
+// The request message for [GetInfo][engflow.cluster.v1.Cluster.GetInfo].
+message GetInfoRequest {
+  // No fields.
+}
+
+// The response message for [GetInfo][engflow.cluster.v1.Cluster.GetInfo].
+message GetInfoResponse {
+  // The version of the cluster.
+  engflow.type.Version version = 1 [(google.api.field_behavior) = REQUIRED];
+}
