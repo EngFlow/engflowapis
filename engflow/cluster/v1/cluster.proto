@@ -24,21 +24,29 @@ option go_package = "github.com/EngFlow/engflowapis-go/engflow/cluster/v1;cluste
 
 option java_multiple_files = true;
 option java_outer_classname = "ClusterProtos";
-option java_package = "com.engflow.cluster.v1";
+option java_package = "com.engflow.cluster.v1.proto";
 
 service Cluster {
   option (engflow.api.engflow_service) = {
-    launch_stage: UNIMPLEMENTED
+    launch_stage: EARLY_ACCESS
 
-    // TODO(yannic): Add availability when it's implemented.
+    availability {
+      product: "platform"
+
+      since { major: 2 minor: 41 patch: 0 }
+    }
   };
 
   // Returns info about the cluster.
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse) {
     option (engflow.api.engflow_method) = {
-      launch_stage: UNIMPLEMENTED
+      launch_stage: EARLY_ACCESS
 
-      // TODO(yannic): Add availability when it's implemented.
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 41 patch: 0 }
+      }
     };
   }
 }
