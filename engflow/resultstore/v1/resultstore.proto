@@ -58,11 +58,8 @@ service ResultStore {
 
 // A request message for `ResultStore/GetInvocation`.
 message GetInvocationRequest {
-  // The instance of the ResultStore service to operate against. A server may
-  // support multiple instances of the ResultStore service on the same gRPC
-  // endpoint. The server MAY require use of this field to select between them
-  // in an implementation-defined fashion, otherwise it can be omitted.
-  string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
+  reserved 1;
+  reserved "instance_name";
 
   // The ID of the invocation to retrieve.
   //
