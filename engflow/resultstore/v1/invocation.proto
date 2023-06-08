@@ -19,7 +19,6 @@ package engflow.resultstore.v1;
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
-import "engflow/resultstore/v1/agent.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "InvocationProtos";
@@ -83,7 +82,6 @@ message InvocationMetadata {
 }
 
 // Information about an invocation.
-// Next id: 12
 message Invocation {
   // The id of this invocation.
   string invocation_id = 1;
@@ -97,11 +95,6 @@ message Invocation {
   // Metadata about the overall invocation (e.g. start time or end time).
   InvocationMetadata invocation_metadata = 5
       [(google.api.field_behavior) = REQUIRED];
-
-  // Agents involved with this invocation.
-  //
-  // TODO(yannic): Move this to `InvocationMetadata`.
-  InvocationAgents agents = 8 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // A summary of remote execution resources consumed by an invocation.

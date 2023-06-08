@@ -44,9 +44,4 @@ option java_package = "com.engflow.auth.proto";
 message AuthContext {
   // The user responsible for the request.
   engflow.auth.User user = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // The agent making the request (on behalf of  `user`).
-  //
-  // If this is not set, the request was made by `user` themselves.
-  optional engflow.auth.User agent = 2 [(google.api.field_behavior) = OPTIONAL];
 }
