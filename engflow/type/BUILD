@@ -5,6 +5,7 @@ proto_library(
     ],
     deps = [
         ":compact_digest_proto",
+        ":key_value_pair_proto",
         ":time_interval_proto",
         ":version_proto",
     ],
@@ -14,6 +15,17 @@ proto_library(
     name = "compact_digest_proto",
     srcs = [
         "compact_digest.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
+)
+
+proto_library(
+    name = "key_value_pair_proto",
+    srcs = [
+        "key_value_pair.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
