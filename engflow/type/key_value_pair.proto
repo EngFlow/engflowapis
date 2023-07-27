@@ -30,4 +30,9 @@ message KeyValuePair {
     string key = 1 [(google.api.field_behavior) = REQUIRED];
     string value = 2 [(google.api.field_behavior) = REQUIRED];
   }
+
+  message StringList {
+    string key = 1 [(google.api.field_behavior) = REQUIRED];
+    repeated string value = 2 [(google.api.field_behavior) = REQUIRED];
+  }
 }
