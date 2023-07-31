@@ -1,21 +1,20 @@
 proto_library(
     name = "protos",
     visibility = [
-        "//engflow:__pkg__",
+        "//engflow/iam:__pkg__",
     ],
     deps = [
-        ":auth_context_proto",
+        ":user_proto",
     ],
 )
 
 proto_library(
-    name = "auth_context_proto",
+    name = "user_proto",
     srcs = [
-        "auth_context.proto",
+        "user.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow/iam/v1:user_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
 )

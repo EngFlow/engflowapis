@@ -18,11 +18,11 @@ package engflow.auth;
 
 import "google/api/field_behavior.proto";
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/auth;engflowauth";
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/iam/v1;iamv1";
 
 option java_multiple_files = true;
 option java_outer_classname = "UserProtos";
-option java_package = "com.engflow.auth.proto";
+option java_package = "com.engflow.iam.v1.proto";
 
 // Represents a user.
 message User {

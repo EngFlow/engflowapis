@@ -17,7 +17,7 @@ syntax = "proto3";
 package engflow.auth;
 
 import "google/api/field_behavior.proto";
-import "engflow/auth/user.proto";
+import "engflow/iam/v1/user.proto";
 
 option go_package = "github.com/EngFlow/engflowapis-go/engflow/auth;engflowauth";
 
