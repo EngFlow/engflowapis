@@ -30,4 +30,11 @@ message User {
   //
   // This uniquely identifies a user.
   string principal = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the role of this user.
+  string role = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The URL to the profile picture of the user.
+  optional string profile_picture_url = 3
+      [(google.api.field_behavior) = OPTIONAL];
 }
