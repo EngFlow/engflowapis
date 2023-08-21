@@ -3,9 +3,28 @@
 This repository contains the gRPC service definitions for public EngFlow APIs.
 
 This repository intentionally does not provide generated code for any languages
-to keep it free of clutter. In other words,  it only provides
+to keep it free of clutter. In other words, it only provides
 [protocol buffers](https://developers.google.com/protocol-buffers) definitions.
 
+## Versioning
+
+> [!IMPORTANT]
+> TL;DR: Some APIs are still under active development and therefore are exempt from any
+stability guarantees and SLAs we may provide to customers. When in doubt, please reach
+out to us before starting to depend on an API.
+
+This repository follows the `gRPC` convention of versioning APIs independently of other
+APIs and including the version of the API in the path of the package it's defined in (e.g.,
+`v1` of `EventStore` is defined in `engflow/eventstore/v1`). This allows multiple versions
+of the same API to coexist and allows incremental migration to a new version of an API
+while still allowing use of the old version.
+
+However, this versioning scheme implies that APIs in this repository can be in different
+stages of their lifecycle and their availability may depend on the server configuration.
+Therefore, we annotate all `gRPC` `service`s and `method`s with their availability (e.g.,
+EngFlow product, server version, ...) and their stability (e.g., under development, available
+to selected customers as preview, available to all customers, deprecated and scheduled for
+removal, ...).
 
 ## Building
 
@@ -25,6 +44,10 @@ bazel build //...
 
 To integrate against `engflowapis` from your Bazel project, you must change your
 `WORKSPACE` and `BUILD` files as follows.
+
+This repository is designed to be consumed at HEAD. Please make yourself familiar
+with our versioning policy below before starting to depend on any APIs.
+
 
 ### `WORKSPACE`
 
