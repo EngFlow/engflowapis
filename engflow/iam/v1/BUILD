@@ -1,15 +1,13 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//engflow/iam:__pkg__",
-    ],
+    name = "v1",
+    visibility = ["//visibility:public"],
     deps = [
-        ":user_proto",
+        ":user",
     ],
 )
 
 proto_library(
-    name = "user_proto",
+    name = "user",
     srcs = [
         "user.proto",
     ],
@@ -17,4 +15,14 @@ proto_library(
     deps = [
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
+)
+
+alias(
+    name = "user_proto",
+    actual = ":user_proto",
+    deprecation = "Please depend on ':user' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )

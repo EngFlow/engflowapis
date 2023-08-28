@@ -8,10 +8,10 @@ exports_files(
 )
 
 proto_library(
-    name = "protos",
+    name = "engflowapis",
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow:protos",
+        "//engflow",
     ],
 )
 
@@ -21,6 +21,16 @@ proto_descriptor_set(
     name = "proto_descriptor_set",
     visibility = ["//visibility:public"],
     deps = [
-        ":protos",
+        ":engflowapis",
     ],
+)
+
+alias(
+    name = "protos",
+    actual = ":engflowapis",
+    deprecation = "Please depend on ':engflowapis' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )

@@ -1,7 +1,7 @@
 proto_library(
-    name = "iam",
+    name = "eventstore",
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow/iam/v1",
+        "//engflow/eventstore/v1",
     ],
 )

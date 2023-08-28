@@ -1,18 +1,16 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//engflow:__pkg__",
-    ],
+    name = "type",
+    visibility = ["//visibility:public"],
     deps = [
-        ":compact_digest_proto",
-        ":key_value_pair_proto",
-        ":time_interval_proto",
-        ":version_proto",
+        ":compact_digest",
+        ":key_value_pair",
+        ":time_interval",
+        ":version",
     ],
 )
 
 proto_library(
-    name = "compact_digest_proto",
+    name = "compact_digest",
     srcs = [
         "compact_digest.proto",
     ],
@@ -22,8 +20,18 @@ proto_library(
     ],
 )
 
+alias(
+    name = "compact_digest_proto",
+    actual = ":compact_digest",
+    deprecation = "Please depend on ':compact_digest' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
-    name = "key_value_pair_proto",
+    name = "key_value_pair",
     srcs = [
         "key_value_pair.proto",
     ],
@@ -33,8 +41,18 @@ proto_library(
     ],
 )
 
+alias(
+    name = "key_value_pair_proto",
+    actual = ":key_value_pair",
+    deprecation = "Please depend on ':key_value_pair' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
-    name = "time_interval_proto",
+    name = "time_interval",
     srcs = [
         "time_interval.proto",
     ],
@@ -46,10 +64,30 @@ proto_library(
     ],
 )
 
+alias(
+    name = "time_interval_proto",
+    actual = ":time_interval",
+    deprecation = "Please depend on ':time_interval' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
-    name = "version_proto",
+    name = "version",
     srcs = [
         "version.proto",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "version_proto",
+    actual = ":version",
+    deprecation = "Please depend on ':version' instead.",
+    tags = [
+        "manual",
     ],
     visibility = ["//visibility:public"],
 )

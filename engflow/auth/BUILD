@@ -1,21 +1,29 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//engflow:__pkg__",
-    ],
+    name = "auth",
+    visibility = ["//visibility:public"],
     deps = [
-        ":auth_context_proto",
+        ":auth_context",
     ],
 )
 
 proto_library(
-    name = "auth_context_proto",
+    name = "auth_context",
     srcs = [
         "auth_context.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow/iam/v1:user_proto",
+        "//engflow/iam/v1:user",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
+)
+
+alias(
+    name = "auth_context_proto",
+    actual = ":auth_context",
+    deprecation = "Please depend on ':auth_context' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )

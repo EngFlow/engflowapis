@@ -1,17 +1,15 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//engflow:__pkg__",
-    ],
+    name = "v1",
+    visibility = ["//visibility:public"],
     deps = [
-        ":build_event_proto",
-        ":eventstore_proto",
-        ":notifications_proto",
+        ":build_event",
+        ":eventstore",
+        ":notifications",
     ],
 )
 
 proto_library(
-    name = "build_event_proto",
+    name = "build_event",
     srcs = [
         "build_event.proto",
     ],
@@ -22,26 +20,56 @@ proto_library(
     ],
 )
 
+alias(
+    name = "build_event_proto",
+    actual = ":build_event",
+    deprecation = "Please depend on ':build_event' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
-    name = "eventstore_proto",
+    name = "eventstore",
     srcs = [
         "eventstore.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
         ":build_event_proto",
-        "//engflow/api:options_proto",
+        "//engflow/api:options",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
 )
 
+alias(
+    name = "eventstore_proto",
+    actual = ":eventstore",
+    deprecation = "Please depend on ':eventstore' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
-    name = "notifications_proto",
+    name = "notifications",
     srcs = [
         "notifications.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow/auth:auth_context_proto",
+        "//engflow/auth:auth_context",
     ],
+)
+
+alias(
+    name = "notifications_proto",
+    actual = ":notifications",
+    deprecation = "Please depend on ':notifications' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )

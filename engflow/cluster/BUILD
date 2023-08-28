@@ -1,7 +1,7 @@
 proto_library(
-    name = "iam",
+    name = "cluster",
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow/iam/v1",
+        "//engflow/cluster/v1",
     ],
 )

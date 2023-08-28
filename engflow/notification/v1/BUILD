@@ -1,16 +1,14 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//engflow:__pkg__",
-    ],
+    name = "v1",
+    visibility = ["//visibility:public"],
     deps = [
-        ":notification_proto",
-        ":notification_queue_proto",
+        ":notification",
+        ":notification_queue",
     ],
 )
 
 proto_library(
-    name = "notification_proto",
+    name = "notification",
     srcs = [
         "notification.proto",
     ],
@@ -21,16 +19,36 @@ proto_library(
     ],
 )
 
+alias(
+    name = "notification_proto",
+    actual = ":notification",
+    deprecation = "Please depend on ':notification' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
-    name = "notification_queue_proto",
+    name = "notification_queue",
     srcs = [
         "notification_queue.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":notification_proto",
-        "//engflow/api:options_proto",
+        ":notification",
+        "//engflow/api:options",
         "@com_google_googleapis//google/rpc:status_proto",
         "@com_google_protobuf//:duration_proto",
     ],
+)
+
+alias(
+    name = "notification_queue_proto",
+    actual = ":notification_queue",
+    deprecation = "Please depend on ':notification_queue' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )

@@ -1,38 +1,56 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//engflow:__pkg__",
-    ],
+    name = "v1",
+    visibility = ["//visibility:public"],
     deps = [
-        ":invocation_proto",
-        ":resultstore_proto",
+        ":invocation",
+        ":resultstore",
     ],
 )
 
 proto_library(
-    name = "invocation_proto",
+    name = "invocation",
     srcs = [
         "invocation.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow/type:compact_digest_proto",
+        "//engflow/type:compact_digest",
         "@com_google_googleapis//google/api:field_behavior_proto",
         "@com_google_protobuf//:duration_proto",
         "@com_google_protobuf//:timestamp_proto",
     ],
 )
 
+alias(
+    name = "invocation_proto",
+    actual = ":invocation",
+    deprecation = "Please depend on ':invocation' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 proto_library(
-    name = "resultstore_proto",
+    name = "resultstore",
     srcs = [
         "resultstore.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":invocation_proto",
-        "//engflow/api:options_proto",
-        "//engflow/type:compact_digest_proto",
+        ":invocation",
+        "//engflow/api:options",
+        "//engflow/type:compact_digest",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
+)
+
+alias(
+    name = "resultstore_proto",
+    actual = ":resultstore",
+    deprecation = "Please depend on ':resultstore' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )

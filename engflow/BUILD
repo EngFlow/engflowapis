@@ -1,16 +1,14 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//:__pkg__",
-    ],
+    name = "engflow",
+    visibility = ["//visibility:public"],
     deps = [
-        "//engflow/api:protos",
-        "//engflow/auth:protos",
-        "//engflow/cluster/v1:protos",
-        "//engflow/eventstore/v1:protos",
-        "//engflow/iam:protos",
-        "//engflow/notification/v1:protos",
-        "//engflow/resultstore/v1:protos",
-        "//engflow/type:protos",
+        "//engflow/api",
+        "//engflow/auth",
+        "//engflow/cluster",
+        "//engflow/eventstore",
+        "//engflow/iam",
+        "//engflow/notification",
+        "//engflow/resultstore",
+        "//engflow/type",
     ],
 )

@@ -1,22 +1,30 @@
 proto_library(
-    name = "protos",
-    visibility = [
-        "//engflow:__pkg__",
-    ],
+    name = "v1",
+    visibility = ["//visibility:public"],
     deps = [
-        ":cluster_proto",
+        ":cluster",
     ],
 )
 
 proto_library(
-    name = "cluster_proto",
+    name = "cluster",
     srcs = [
         "cluster.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//engflow/api:options_proto",
-        "//engflow/type:version_proto",
+        "//engflow/api:options",
+        "//engflow/type:version",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
+)
+
+alias(
+    name = "cluster_proto",
+    actual = ":cluster",
+    deprecation = "Please depend on ':cluster' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )
