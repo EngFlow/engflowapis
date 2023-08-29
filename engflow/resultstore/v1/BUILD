@@ -2,9 +2,18 @@ proto_library(
     name = "v1",
     visibility = ["//visibility:public"],
     deps = [
+        ":environment",
         ":invocation",
         ":resultstore",
     ],
+)
+
+proto_library(
+    name = "environment",
+    srcs = [
+        "environment.proto",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 proto_library(
@@ -14,6 +23,7 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        ":environment",
         "//engflow/type:compact_digest",
         "@com_google_googleapis//google/api:field_behavior_proto",
         "@com_google_protobuf//:duration_proto",

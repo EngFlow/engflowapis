@@ -19,6 +19,7 @@ package engflow.resultstore.v1;
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
+import "engflow/resultstore/v1/environment.proto";
 
 option go_package = "github.com/EngFlow/engflowapis-go/engflow/resultstore/v1;resultstorev1";
 
@@ -38,31 +39,18 @@ message ServiceLevel {
   }
 }
 
-// Contains information about the environment of the invocation.
-message InvocationEnvironmentInformation {
-  message CiCdSystem {
-    // The name of the CI/CD pipeline.
-    //
-    // This is populated by the `engflow:CiCdPipelineName` BES keyword.
-    optional string pipeline_name = 1;
-
-    // The name of the job within the CI/CD pipeline.
-    //
-    // This is populated from the `engflow:CiCdJobName` BES keyword.
-    optional string job_name = 2;
-
-    // The URI of the invocation in the CI/CD pipeline.
-    //
-    // This is populated from the `engflow:CiCdUri` BES keyword.
-    optional string uri = 3;
-  }
-  optional CiCdSystem ci_cd_system = 1;
-}
-
 // Generic metadata about an invocation.
 message InvocationMetadata {
   // The interactivity of this build.
-  ServiceLevel.Value service_level = 1;
+  ServiceLevel.Value service_level = 1 [deprecated = true];
+
+  // The session running this invocation.
+  //
+  // Disclaimer: this refers to the session sending the
+  // `InvocationAttemptStarted` BES lifecycle event. There is no guarantee that
+  // the invocation used this session for all operations (e.g., some or all
+  // actions may have been executed using a different session).
+  string client_session = 7;
 
   // The time of the invocation started (i.e. enqueued).
   google.protobuf.Timestamp start_time = 2
