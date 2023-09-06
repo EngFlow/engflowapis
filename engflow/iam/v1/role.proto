@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package engflow.iam.v1;
+
+import "google/api/field_behavior.proto";
+import "engflow/iam/v1/policy.proto";
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/iam/v1;iamv1";
+
+option java_multiple_files = true;
+option java_outer_classname = "RoleProtos";
+option java_package = "com.engflow.iam.v1.proto";
+
+// A (user-defined) role.
+//
+// By default, roles do not having permission to do any operations (i.e., all
+// permissions are allow-listed).
+//
+// For example, the following role would allow reading from the `default`
+// instance's content-addressable-storage and action-cache, but not writing to
+// them or executing actions:
+//
+// ```
+// name: "cache-reader-default"
+//
+// description: "Role for local builds, allowing read-only access to the "
+//              "action cache"
+//
+// policy {
+//   name: "cas-read"
+//
+//   action: "actioncache:Read"
+//   action: "contentaddressablestorage:Read"
+//
+//   resource "engflow:platform:*:default:*:*"
+// }
+// ```
+message Role {
+  // The name of the role.
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Free-form text to document what the role is for.
+  optional string description = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // A list of permissions this role has.
+  repeated Policy policy = 3 [(google.api.field_behavior) = OPTIONAL];
+}

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package engflow.iam.v1;
+
+import "google/api/field_behavior.proto";
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/iam/v1;iamv1";
+
+option java_multiple_files = true;
+option java_outer_classname = "PolicyProtos";
+option java_package = "com.engflow.iam.v1.proto";
+
+// A (user-defined) policy.
+//
+// By default, policies do not allow any operations (i.e., all permissions are
+// allow-listed).
+//
+// For example, the following policy would allow reading from the `default`
+// instance's content-addressable-storage and action-cache, but not writing to
+// them or executing actions:
+//
+// ```
+// name: "cas-read"
+//
+// description: "Policy for cache readers"
+//
+// action: "actioncache:Read"
+// action: "contentaddressablestorage:Read"
+//
+// resource "engflow:platform:*:default:*:*"
+// ```
+message Policy {
+  // The name of the permission.
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Free-form text to document what the permission is for.
+  optional string description = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // Reserved for future use (enum ALLOW/DENY).
+  reserved 3;
+  reserved "effect";
+
+  // A list of actions this permission allows.
+  //
+  // An empty list means this permission does not any allowed actions and is
+  // equivalent to not having the permission.
+  repeated string action = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // A list of resources to allow the actions on.
+  //
+  // An empty list means this permission does not allow the specified actions on
+  // any resource and is equivalent to not having the permission.
+  repeated string resource = 5 [(google.api.field_behavior) = OPTIONAL];
+}

@@ -14,7 +14,7 @@
 
 syntax = "proto3";
 
-package engflow.auth;
+package engflow.iam.v1;
 
 import "google/api/field_behavior.proto";
 

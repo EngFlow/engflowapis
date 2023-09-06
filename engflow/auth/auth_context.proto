@@ -43,5 +43,5 @@ option java_package = "com.engflow.auth.proto";
 // build.
 message AuthContext {
   // The user responsible for the request.
-  engflow.auth.User user = 1 [(google.api.field_behavior) = REQUIRED];
+  engflow.iam.v1.User user = 1 [(google.api.field_behavior) = REQUIRED];
 }
