@@ -4,6 +4,7 @@ proto_library(
     deps = [
         ":policy",
         ":role",
+        ":session",
         ":user",
     ],
 )
@@ -50,4 +51,15 @@ alias(
         "manual",
     ],
     visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "session",
+    srcs = [
+        "session.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
 )

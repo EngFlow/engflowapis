@@ -3,6 +3,7 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         ":compact_digest",
+        ":host_and_port",
         ":key_value_pair",
         ":time_interval",
         ":version",
@@ -28,6 +29,17 @@ alias(
         "manual",
     ],
     visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "host_and_port",
+    srcs = [
+        "host_and_port.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
 )
 
 proto_library(
