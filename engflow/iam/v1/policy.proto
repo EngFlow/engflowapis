@@ -48,7 +48,7 @@ message Policy {
   string name = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Free-form text to document what the permission is for.
-  optional string description = 2 [(google.api.field_behavior) = OPTIONAL];
+  string description = 2 [(google.api.field_behavior) = OPTIONAL];
 
   // Reserved for future use (enum ALLOW/DENY).
   reserved 3;
