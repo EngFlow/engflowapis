@@ -1,0 +1,79 @@
+// Copyright 2023 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.iam.v1;
+
+import "google/api/field_behavior.proto";
+import "engflow/api/options.proto";
+import "engflow/iam/v1/role.proto";
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/iam/v1;iamv1";
+
+option java_multiple_files = true;
+option java_outer_classname = "IdentityAndAccessManagementProtos";
+option java_package = "com.engflow.iam.v1.proto";
+
+// gRPC service for Identity and Access Management.
+service IdentityAndAccessManagement {
+  option (engflow.api.engflow_service) = {
+    launch_stage: EARLY_ACCESS
+
+    availability {
+      product: "platform"
+
+      since { major: 2 minor: 52 patch: 0 }
+    }
+  };
+
+  // Returns an existing [`Role`][engflow.iam.v1.Role].
+  //
+  // An error will be reported in the following cases:
+  //
+  //   * `NOT_FOUND`: The role with the specified name does not exist.
+  rpc GetRole(GetRoleRequest) returns (GetRoleResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 52 patch: 0 }
+      }
+    };
+  }
+}
+
+// Request type for the
+// [`GetRole`][engflow.iam.v1.IdentityAndAccessManagement/GetRole]
+// call.
+message GetRoleRequest {
+  reserved 1;
+  reserved "version";
+
+  // The name of the role.
+  string name = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response type for the
+// [`GetRole`][engflow.iam.v1.IdentityAndAccessManagement/GetRole]
+// call.
+message GetRoleResponse {
+  reserved 1;
+  reserved "version";
+
+  // The role.
+  engflow.iam.v1.Role role = 2 [(google.api.field_behavior) = REQUIRED];
+}

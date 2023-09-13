@@ -8,6 +8,7 @@ proto_library(
         "//engflow/eventstore",
         "//engflow/iam",
         "//engflow/notification",
+        "//engflow/resourceusage",
         "//engflow/resultstore",
         "//engflow/type",
     ],

@@ -2,10 +2,24 @@ proto_library(
     name = "v1",
     visibility = ["//visibility:public"],
     deps = [
+        ":identity_and_access_management",
         ":policy",
         ":role",
         ":session",
         ":user",
+    ],
+)
+
+proto_library(
+    name = "identity_and_access_management",
+    srcs = [
+        "identity_and_access_management.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":role",
+        "//engflow/api:options",
+        "@com_google_googleapis//google/api:field_behavior_proto",
     ],
 )
 
