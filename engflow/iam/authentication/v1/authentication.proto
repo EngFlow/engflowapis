@@ -1,0 +1,80 @@
+// Copyright 2023 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.iam.authentication.v1;
+
+option go_package = "github.com/EngFlow/engflowapis-go/engflow/iam/authentication/v1;authenticationv1";
+
+import "google/rpc/status.proto";
+import "google/api/field_behavior.proto";
+import "engflow/iam/v1/session.proto";
+import "engflow/type/key_value_pair.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "AuthenticationProtos";
+option java_package = "com.engflow.iam.authentication.v1.proto";
+
+// Service authenticating users.
+//
+// This is used for delegating authentication of users to an external service
+// (e.g., for customers that have their own authentication mechanism).
+service Authentication {
+  // Authenticates a request.
+  //
+  // Implementations **MUST** only authenticate (validate the credentials
+  // provided in the request), not authorize (verify the credentials allow
+  // performing the operation). Users that are not allowed to use the cluster
+  // should therefore get `none` as role (or an equivalent role).
+  //
+  // **Important**:
+  //
+  // EngFlow will call this for every incoming request, so latency is extremely
+  // performance critical.
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse) {}
+}
+
+// Parameter type for
+// [Authentication/Authenticate][engflow.iam.authentication.v1.Authentication.Authenticate].
+message AuthenticateRequest {
+  // Metadata sent with the request.
+  //
+  // This is typically headers sent as part of the HTTP request or `gRPC` call.
+  repeated engflow.type.KeyValuePair.StringList request_metadata = 1;
+}
+
+// Return type for
+// [Authentication/Authenticate][engflow.iam.authentication.v1.Authentication.Authenticate].
+message AuthenticateResponse {
+  // The result of the authorization request.
+  //
+  // Missing values are interpreted the same as returning `UNKNOWN`.
+  //
+  // Valid values for this are:
+  //   - `OK`: indicates the request was successfully authenticated and is
+  //     associated with the provided [Session][engflow.iam.v1.Session].
+  //   - `UNAUTHENTICATED`: indicates that the provided credentials were not
+  //     valid or no credentials were provided. This status aborts the request
+  //     and returned to the user.
+  //
+  // Any other value will be abort the request and return `UNAVAILABLE` to the
+  // user.
+  google.rpc.Status status = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The session to use for the request.
+  //
+  // This is required if and only if `status` is OK.
+  optional engflow.iam.v1.Session session = 2;
+}
