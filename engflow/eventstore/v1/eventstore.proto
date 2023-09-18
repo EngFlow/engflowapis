@@ -106,9 +106,8 @@ message ReplayModeOptions {
 
 // A request message for `EventStore/GetBuild`.
 message GetBuildRequest {
-  // Reserved for future use.
-  reserved 1;
-  reserved "instance_name";
+  // The instance of the execution system used to run the build.
+  string instance_name = 1;
 
   // The ID of the build to retrieve.
   //
@@ -135,9 +134,8 @@ message GetBuildRequest {
 
 // A request message for `EventStore/GetInvocation`.
 message GetInvocationRequest {
-  // Reserved for future use.
-  reserved 1;
-  reserved "instance_name";
+  // The instance of the execution system used to run the invocation.
+  string instance_name = 1;
 
   // The ID of the invocation to retrieve.
   //
