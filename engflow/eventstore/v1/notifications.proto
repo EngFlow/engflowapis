@@ -26,8 +26,7 @@ option java_package = "com.engflow.eventstore.v1.proto";
 
 // Payload type for build lifecycle event notifications.
 message BuildLifecycleEventNotification {
-  reserved 1;
-  reserved "instance_name";
+  string instance_name = 1;
 
   // The ID of the build.
   //
