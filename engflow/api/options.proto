@@ -83,6 +83,9 @@ message MethodOptions {
 
   // Availability of the method (e.g., available since `v2.0.0`).
   engflow.api.Availability availability = 2;
+
+  // Which permissions users need to call this API.
+  string required_permission = 3;
 }
 
 extend google.protobuf.FileOptions {

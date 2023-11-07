@@ -60,6 +60,8 @@ service EventStore {
 
         since { major: 2 minor: 36 patch: 0 }
       }
+
+      required_permission: "eventstore:GetBuild"
     };
   }
 
@@ -80,6 +82,8 @@ service EventStore {
 
         since { major: 2 minor: 0 patch: 0 }
       }
+
+      required_permission: "eventstore:GetInvocation"
     };
   }
 }
