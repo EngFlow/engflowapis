@@ -25,6 +25,7 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//engflow/type:key_value_pair",
         "@com_google_protobuf//:any_proto",
     ],
 )

@@ -17,6 +17,7 @@ syntax = "proto3";
 package engflow.resourceusage.v1;
 
 import "google/protobuf/any.proto";
+import "engflow/type/key_value_pair.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "EventProtos";
@@ -28,11 +29,24 @@ option java_package = "com.engflow.resourceusage.v1.proto";
 // `HTTP` operation) emits one such event about the resources the operation
 // consumed.
 message ResourceUsageEvent {
-  reserved 1;
-  reserved "instance_name";
+  // A list of (EngFlow-provided) dimensions.
+  //
+  // Examples:
+  //
+  //   * `instance_name=default`
+  //   * `os=linux`
+  //   * `cpu.arch=x86_64`
+  //   * `cpu.cores=1`
+  //   * `memory.size=1024`
+  repeated engflow.type.KeyValuePair.String dimension = 1;
 
-  reserved 2;
-  reserved "metadata";
+  // A list of (user-provided) tags.
+  //
+  // Examples:
+  //
+  //   * `workflow=clang-18`
+  //   * `pipeline=presubmit`
+  repeated engflow.type.KeyValuePair tag = 2;
 
   // Operation-specific information about the consumed resources.
   repeated google.protobuf.Any payload = 3;

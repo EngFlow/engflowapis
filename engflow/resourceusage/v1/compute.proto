@@ -23,19 +23,7 @@ option java_outer_classname = "ComputeProtos";
 option java_package = "com.engflow.resourceusage.v1.proto";
 
 // Represents the use of compute resources (CPU, RAM).
-message ComputeResource {
-  // The number of CPU cores utilized.
-  //
-  // Note that this represents the number of cores allocated for the operations
-  // and that operations may over-allocate CPU cores.
-  uint32 cpu_cores = 1;
-
-  // The memory (RAM) utilized.
-  //
-  // Note that this represents the memory allocated for the operations and that
-  // operations may over-allocate memory.
-  uint64 memory_bytes = 2;
-
+message Compute {
   // The duration for which the compute resources were utilized.
-  google.protobuf.Duration duration = 3;
+  google.protobuf.Duration duration = 1;
 }
