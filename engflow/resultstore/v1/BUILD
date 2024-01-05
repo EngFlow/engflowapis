@@ -4,6 +4,7 @@ proto_library(
     deps = [
         ":environment",
         ":invocation",
+        ":notifications",
         ":resultstore",
     ],
 )
@@ -37,6 +38,14 @@ alias(
     deprecation = "Please depend on ':invocation' instead.",
     tags = [
         "manual",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+proto_library(
+    name = "notifications",
+    srcs = [
+        "notifications.proto",
     ],
     visibility = ["//visibility:public"],
 )

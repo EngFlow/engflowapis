@@ -49,11 +49,7 @@ message BuildLifecycleEventNotification {
   }
 
   // Notification indicating that a build ended.
-  //
-  // TODO(yannic): Should we include the invocations that were part of this
-  // build in this notification?
   message BuildFinished {
-    // TODO(yannic): Add overall status of the build.
   }
 
   // Notification indicating that a new invocation started as part of this
@@ -67,8 +63,6 @@ message BuildLifecycleEventNotification {
   message InvocationFinished {
     // The ID of the invocation. This is always a valid UUID.
     string invocation_id = 1;
-
-    // TODO(yannic): Add status of invocation.
   }
 
   oneof kind {
