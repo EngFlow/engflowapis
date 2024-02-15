@@ -60,8 +60,7 @@ service ResultStore {
 
 // A request message for `ResultStore/GetInvocation`.
 message GetInvocationRequest {
-  reserved 1;
-  reserved "instance_name";
+  string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
 
   // The ID of the invocation to retrieve.
   //
