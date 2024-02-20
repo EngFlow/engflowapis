@@ -46,7 +46,7 @@ message ResourceUsageEvent {
   //
   //   * `workflow=clang-18`
   //   * `pipeline=presubmit`
-  repeated engflow.type.KeyValuePair tag = 2;
+  repeated engflow.type.KeyValuePair.String tag = 2;
 
   // Operation-specific information about the consumed resources.
   repeated google.protobuf.Any payload = 3;
