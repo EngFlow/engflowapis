@@ -41,4 +41,29 @@ message InvocationEnvironmentInformation {
     optional string uri = 3;
   }
   optional CiCdSystem ci_cd_system = 1;
+
+  // Contains information about the source control management system used.
+  message ScmSystem {
+    // The name or URI of the remote repository.
+    //
+    // This is populated by the `engflow:BuildScmRemote` BES keyword.
+    optional string repository = 1;
+
+    // The name of the branch.
+    //
+    // This is populated from the `engflow:BuildScmBranch` BES keyword.
+    optional string branch = 2;
+
+    // The identifier for the commit, e.g. the SHA.
+    //
+    // This is populated from the `engflow:BuildScmRevision` BES keyword.
+    optional string commit_id = 3;
+
+    // Whether local changes on top of the current commit were reported.
+    //
+    // This is populated from `engflow:BuildScmStatus` BES keyword, where
+    // `engflow:BuildScmStatus=modified` reports local changes.
+    optional bool commit_modified = 4;
+  }
+  optional ScmSystem scm_system = 2;
 }
