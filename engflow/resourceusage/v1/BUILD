@@ -27,5 +27,6 @@ proto_library(
     deps = [
         "//engflow/type:key_value_pair",
         "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:timestamp_proto",
     ],
 )

@@ -17,6 +17,7 @@ syntax = "proto3";
 package engflow.resourceusage.v1;
 
 import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
 import "engflow/type/key_value_pair.proto";
 
 option java_multiple_files = true;
@@ -50,4 +51,7 @@ message ResourceUsageEvent {
 
   // Operation-specific information about the consumed resources.
   repeated google.protobuf.Any payload = 3;
+
+  // The timestamp of the event.
+  google.protobuf.Timestamp timestamp = 4;
 }
