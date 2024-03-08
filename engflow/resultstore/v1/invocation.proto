@@ -73,11 +73,29 @@ message InvocationMetadata {
 
 // Information about an invocation.
 message Invocation {
+  // Describes a user-visible error that occurred during BEP parsing.
+  message BepParsingError {
+    // The user-visible message.
+    string message = 1;
+    // If the message was truncated.
+    bool truncated = 2;
+  }
+
   // The id of this invocation.
   string invocation_id = 1;
 
   // The id of a the build this invocation is part of.
   string build_id = 2;
+
+  // User-visible errors to surface example errors that occurred while
+  // parsing the BEP for this invocation.
+  //
+  // This field will only contain a maximum number of errors as set by the
+  // implementation.
+  repeated BepParsingError bep_parsing_errors = 13;
+
+  // The total number of BEP errors.
+  uint32 bep_parsing_error_total = 14;
 
   // Used in previous versions of this API.
   reserved 3, 4;
@@ -85,6 +103,9 @@ message Invocation {
   // Metadata about the overall invocation (e.g. start time or end time).
   InvocationMetadata invocation_metadata = 5
       [(google.api.field_behavior) = REQUIRED];
+
+  // Used in previous versions of this API.
+  reserved 6 to 12;
 }
 
 // A summary of remote execution resources consumed by an invocation.
