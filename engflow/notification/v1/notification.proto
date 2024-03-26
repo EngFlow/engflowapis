@@ -29,14 +29,14 @@ option java_package = "com.engflow.notification.v1.proto";
 //
 // This is primarily a container around an untyped payload, but also provides
 // additional metadata like an unique identifier for the notification or the
-// timestamp when the notification has been published.
+// timestamp when the notification was created.
 message Notification {
   // A unique id identifying this notification.
   //
   // This is always an RFC 4122-compliant UUID.
   string id = 1;
 
-  // The timestamp when the message was published.
+  // The timestamp when the notification was created.
   google.protobuf.Timestamp timestamp = 2;
 
   // Reserved for future use.
