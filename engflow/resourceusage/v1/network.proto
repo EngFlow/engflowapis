@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package engflow.resourceusage.v1;
+
+option java_multiple_files = true;
+option java_outer_classname = "NetworkProtos";
+option java_package = "com.engflow.resourceusage.v1.proto";
+import "engflow/type/key_value_pair.proto";
+
+// Represents the use of network resources
+message Network {
+  uint64 uploaded_bytes = 1;
+  uint64 downloaded_bytes = 2;
+}

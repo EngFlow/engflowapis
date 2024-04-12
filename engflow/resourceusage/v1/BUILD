@@ -30,3 +30,14 @@ proto_library(
         "@com_google_protobuf//:timestamp_proto",
     ],
 )
+
+proto_library(
+    name = "network",
+    srcs = [
+        "network.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//engflow/type:key_value_pair",
+    ],
+)
