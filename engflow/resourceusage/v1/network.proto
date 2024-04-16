@@ -5,7 +5,6 @@ package engflow.resourceusage.v1;
 option java_multiple_files = true;
 option java_outer_classname = "NetworkProtos";
 option java_package = "com.engflow.resourceusage.v1.proto";
-import "engflow/type/key_value_pair.proto";
 
 // Represents the use of network resources
 message Network {
