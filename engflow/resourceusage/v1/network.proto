@@ -8,6 +8,10 @@ option java_package = "com.engflow.resourceusage.v1.proto";
 
 // Represents the use of network resources
 message Network {
-  uint64 uploaded_bytes = 1;
-  uint64 downloaded_bytes = 2;
+  // number of bytes transferred out of the cluster through ByteStream and
+  // related requests
+  uint64 egress_bytes = 1;
+  // number of bytes transferred into the cluster through ByteStream and related
+  // requests
+  uint64 ingress_bytes = 2;
 }
