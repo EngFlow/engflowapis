@@ -4,6 +4,7 @@ proto_library(
     deps = [
         ":compute",
         ":event",
+        ":network",
     ],
 )
 
