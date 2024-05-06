@@ -59,7 +59,7 @@ proto_library(
 
 alias(
     name = "user_proto",
-    actual = ":user_proto",
+    actual = ":user",
     deprecation = "Please depend on ':user' instead.",
     tags = [
         "manual",
