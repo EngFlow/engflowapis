@@ -5,6 +5,7 @@ proto_library(
         ":compute",
         ":event",
         ":network",
+        ":storage",
     ],
 )
 
@@ -40,5 +41,16 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         "//engflow/type:key_value_pair",
+    ],
+)
+
+proto_library(
+    name = "storage",
+    srcs = [
+        "storage.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:duration_proto",
     ],
 )
