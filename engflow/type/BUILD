@@ -1,3 +1,5 @@
+load("//lang/rpc:defs.bzl", "ts_rpc_library")
+
 proto_library(
     name = "type",
     visibility = ["//visibility:public"],
@@ -19,6 +21,12 @@ proto_library(
     deps = [
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
+)
+
+ts_rpc_library(
+    name = "compact_digest_ts_proto",
+    proto = ":compact_digest",
+    visibility = ["//visibility:public"],
 )
 
 alias(
