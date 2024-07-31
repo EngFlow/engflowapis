@@ -1,4 +1,4 @@
-// Copyright 2023 EngFlow, Inc. All rights reserved.
+// Copyright 2024 EngFlow, Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,26 +54,105 @@ service IdentityAndAccessManagement {
       }
     };
   }
+
+  // Creates a new [`Role`][engflow.iam.v1.Role].
+  //
+  // An error will be reported in the following cases:
+  //
+  //   * `ALREADY_EXISTS`: A role with the specified name already exists.
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 86 patch: 0 }
+      }
+    };
+  }
+
+  // Deletes a [`Role`][engflow.iam.v1.Role].
+  //
+  // An error will be reported in the following cases:
+  //
+  //   * `NOT_FOUND`: The role with the specified name does not exist.
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 86 patch: 0 }
+      }
+    };
+  }
+
+  rpc ListRoles(ListRolesRequest) returns (stream ListRolesResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 86 patch: 0 }
+      }
+    };
+  }
 }
 
 // Request type for the
 // [`GetRole`][engflow.iam.v1.IdentityAndAccessManagement/GetRole]
 // call.
 message GetRoleRequest {
-  reserved 1;
-  reserved "version";
-
   // The name of the role.
-  string name = 2 [(google.api.field_behavior) = REQUIRED];
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response type for the
 // [`GetRole`][engflow.iam.v1.IdentityAndAccessManagement/GetRole]
 // call.
 message GetRoleResponse {
-  reserved 1;
-  reserved "version";
-
   // The role.
-  engflow.iam.v1.Role role = 2 [(google.api.field_behavior) = REQUIRED];
+  engflow.iam.v1.Role role = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request type for the
+// [`CreateRole`][engflow.iam.v1alpha.IdentityAndAccessManagement/CreateRole]
+// call.
+message CreateRoleRequest {
+  // The definition of the new role.
+  engflow.iam.v1.Role role = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response type for the
+// [`CreateRole`][engflow.iam.v1alpha.IdentityAndAccessManagement/CreateRole]
+// call.
+message CreateRoleResponse {}
+
+// Request type for the
+// [`DeleteRole`][engflow.iam.v1alpha.IdentityAndAccessManagement/DeleteRole]
+// call.
+message DeleteRoleRequest {
+  // The name of the role.
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response type for the
+// [`DeleteRole`][engflow.iam.v1alpha.IdentityAndAccessManagement/DeleteRole]
+// call.
+message DeleteRoleResponse {}
+
+// Request type for the
+// [`ListRoles`][engflow.iam.v1alpha.IdentityAndAccessManagement/ListRole]
+// call.
+message ListRolesRequest {}
+
+// Response type for the
+// [`ListRoles`][engflow.iam.v1alpha.IdentityAndAccessManagement/ListRole]
+// call.
+message ListRolesResponse {
+  // List of role names
+  repeated string name = 1;
 }
