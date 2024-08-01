@@ -20,7 +20,6 @@ proto_library(
         ":role",
         "//engflow/api:options",
         "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_protobuf//:empty_proto",
     ],
 )
 
