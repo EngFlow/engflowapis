@@ -88,6 +88,22 @@ service IdentityAndAccessManagement {
       }
     };
   }
+  // Updates a [`Role`][engflow.iam.v1.Role].
+  //
+  // An error will be reported in the following cases:
+  //
+  //   * `NOT_FOUND`: The role with the specified name does not exist.
+  rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+
+      availability {
+        product: "platform"
+
+        since { major: 2 minor: 87 patch: 0 }
+      }
+    };
+  }
 
   rpc ListRoles(ListRolesRequest) returns (stream ListRolesResponse) {
     option (engflow.api.engflow_method) = {
@@ -156,3 +172,16 @@ message ListRolesResponse {
   // List of role names
   repeated string name = 1;
 }
+
+// Response type for the
+// [`UpdateRole`][engflow.iam.v1alpha.IdentityAndAccessManagement/UpdateRole]
+// call.
+message UpdateRoleRequest {
+  // The definition of the updated role.
+  engflow.iam.v1.Role role = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response type for the
+// [`UpdateRole`][engflow.iam.v1alpha.IdentityAndAccessManagement/UpdateRole]
+// call.
+message UpdateRoleResponse {}
