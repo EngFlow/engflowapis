@@ -2,9 +2,9 @@ name: CI
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - "main"
+  #push:
+  #  branches:
+  #    - "main"
 
 env:
   BAZELISK_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
