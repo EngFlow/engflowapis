@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+
+env:
+  BAZELISK_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  OPAL_RPC_CREDENTIALS: ${{ secrets.OPAL_RPC_CREDENTIALS }}
+
+jobs:
+  test-matrix:
+    runs-on:
+      - self-hosted
+      - "os=${{ matrix.os }}"
+      - "arch=${{ matrix.arch }}"
+      - "os_distribution=${{ matrix.os_distribution }}"
+      - "os_version=${{ matrix.os_version }}"
+      - "revision=${{ matrix.revision }}"
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: linux
+            arch: x64
+            os_distribution: debian
+            os_version: 11
+            revision: d04e89854b3931f4aaced77aa3a2fcad5834b3a6
+            remote_execution: 'false'
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up authentication
+        shell: bash
+        run: cp infra/bazelrc .bazelrc.user
+
+      - name: Build api
+        run: bazel build //engflow/api/...
+
+      - name: Build auth
+        run: bazel build //engflow/auth/...
+
+      - name: Build cluster
+        run: bazel build //engflow/cluster/...
+
+      - name: Build eventstore
+        run: bazel build //engflow/eventstore/...
+
+      - name: Build iam
+        run: bazel build //engflow/iam/...
+
+      - name: Build notification
+        run: bazel build //engflow/notification/...
+
+      - name: Build resourceusage
+        run: bazel build //engflow/resourceusage/...
+
+      - name: Build resultstore
+        run: bazel build //engflow/resultstore/...
+
+      - name: Build type
+        run: bazel build //engflow/type/...

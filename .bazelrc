@@ -1,5 +1,40 @@
-common --enable_platform_specific_config
-common --experimental_announce_profile_path
+# Options common for all EngFlow remote configurations.
+build:engflow_common --enable_platform_specific_config
+build:engflow_common --experimental_announce_profile_path
+build:engflow_common --jobs=40
+build:engflow_common --define=EXECUTOR=remote
+build:engflow_common --disk_cache=
+build:engflow_common --experimental_inmemory_dotd_files
+build:engflow_common --experimental_inmemory_jdeps_files
+build:engflow_common --incompatible_strict_action_env=true
+build:engflow_common --remote_timeout=3600
+build:engflow_common --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+build:engflow_common --java_runtime_version=remotejdk_11
+build:engflow_common --java_language_version=11
+build:engflow_common --grpc_keepalive_time=30s
+build:engflow_common --legacy_important_outputs=false
+
+# Options for continuous testing.
+build:ci --color=yes
+build:ci --curses=yes
+build:ci --show_timestamps
+build:ci --announce_rc
+build:ci --test_output=summary
+build:ci --show_progress_rate_limit=2.0
+build:ci --nobuild_runfile_links
+build:ci --keep_going
+
+# Options for remote builds.
+build:opal --config=engflow_common
+build:opal --config=opal_bes
+build:opal --config=opal_auth
+build:opal --remote_instance_name=example-oss
+build:opal --remote_executor=grpcs://opal.cluster.engflow.com
+
+build:opal_bes --bes_backend=grpcs://opal.cluster.engflow.com
+build:opal_bes --bes_instance_name=example-oss
+build:opal_bes --bes_lifecycle_events
+build:opal_bes --bes_results_url=https://opal.cluster.engflow.com/invocations/example-oss/
 
 build --incompatible_strict_action_env
 
