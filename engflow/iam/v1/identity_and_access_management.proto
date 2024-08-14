@@ -67,7 +67,7 @@ service IdentityAndAccessManagement {
       availability {
         product: "platform"
 
-        since { major: 2 minor: 86 patch: 0 }
+        since { major: 2 minor: 87 patch: 0 }
       }
     };
   }
@@ -84,7 +84,7 @@ service IdentityAndAccessManagement {
       availability {
         product: "platform"
 
-        since { major: 2 minor: 86 patch: 0 }
+        since { major: 2 minor: 87 patch: 0 }
       }
     };
   }
@@ -112,7 +112,7 @@ service IdentityAndAccessManagement {
       availability {
         product: "platform"
 
-        since { major: 2 minor: 86 patch: 0 }
+        since { major: 2 minor: 87 patch: 0 }
       }
     };
   }
