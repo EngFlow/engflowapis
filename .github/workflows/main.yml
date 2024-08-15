@@ -12,25 +12,8 @@ env:
   OPAL_RPC_CREDENTIALS: ${{ secrets.OPAL_RPC_CREDENTIALS }}
 
 jobs:
-  test-matrix:
-    runs-on:
-      - self-hosted
-      - "os=${{ matrix.os }}"
-      - "arch=${{ matrix.arch }}"
-      - "os_distribution=${{ matrix.os_distribution }}"
-      - "os_version=${{ matrix.os_version }}"
-      - "revision=${{ matrix.revision }}"
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: linux
-            arch: x64
-            os_distribution: debian
-            os_version: 11
-            revision: d04e89854b3931f4aaced77aa3a2fcad5834b3a6
-            remote_execution: 'false'
+  build-all:
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
