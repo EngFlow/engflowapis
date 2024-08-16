@@ -60,7 +60,6 @@ proto_library(
         ":invocation",
         "//engflow/api:options",
         "//engflow/type:compact_digest",
-        "//proto/engflow/resultstore/v1alpha:meta_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
 )
