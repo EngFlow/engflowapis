@@ -9,10 +9,21 @@ option go_package = "github.com/EngFlow/engflowapis-go/engflow/resourceusage/v1;
 
 // Represents the use of network resources
 message Network {
+  // DEPRECATED (once uploaded_bytes starts populating in v2.90)
   // number of bytes transferred out of the cluster through ByteStream and
   // related requests
   uint64 egress_bytes = 1;
+
+  // DEPRECATED (once downloaded_bytes starts populating in v2.90)
   // number of bytes transferred into the cluster through ByteStream and related
   // requests
   uint64 ingress_bytes = 2;
+
+  // number of bytes transferred into the cluster through ByteStream/Write and
+  // related requests
+  uint64 uploaded_bytes = 3;
+
+  // number of bytes transferred out of the cluster through ByteStream/Read and
+  // related requests
+  uint64 downloaded_bytes = 4;
 }
