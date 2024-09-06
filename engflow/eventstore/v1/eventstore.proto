@@ -175,4 +175,7 @@ message StreamedBuildEvent {
   // stream.
   optional BuildProgressEvent event = 3
       [(google.api.field_behavior) = OPTIONAL];
+
+  // The principal name who initiated the build.
+  string principal = 4;
 }
