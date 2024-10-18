@@ -1,6 +1,9 @@
 # User-specific bazelrc
 .bazelrc.user
 
+# bzlmod lockfile
+MODULE.bazel.lock
+
 # Bazel convinience symlinks.
 /bazel-*
 .ijwb

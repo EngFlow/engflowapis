@@ -18,33 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up authentication
-        shell: bash
-        run: cp infra/bazelrc .bazelrc.user
-
-      - name: Build api
-        run: bazel build //engflow/api/...
-
-      - name: Build auth
-        run: bazel build //engflow/auth/...
-
-      - name: Build cluster
-        run: bazel build //engflow/cluster/...
-
-      - name: Build eventstore
-        run: bazel build //engflow/eventstore/...
-
-      - name: Build iam
-        run: bazel build //engflow/iam/...
-
-      - name: Build notification
-        run: bazel build //engflow/notification/...
-
-      - name: Build resourceusage
-        run: bazel build //engflow/resourceusage/...
-
-      - name: Build resultstore
-        run: bazel build //engflow/resultstore/...
-
-      - name: Build type
-        run: bazel build //engflow/type/...
+      - name: Build
+        run: |
+          bazel \
+            build \
+              --config=ci \
+            //...
