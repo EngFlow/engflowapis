@@ -43,7 +43,7 @@ jobs:
           # 2. Update `MODULE.bazel` and commit.
           "${RUNNER_TEMP}/buildozer" "set version ${VERSION}" "//MODULE.bazel:engflowapis"
           git add "MODULE.bazel"
-          git commit -m "Release ${VERSION}"
+          git commit --author="EngFlow <noreply@engflow.com>" -m "Release ${VERSION}"
 
           # 3. Push release tag.
           git tag "${VERSION}" "HEAD"
