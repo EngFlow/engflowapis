@@ -58,7 +58,6 @@ jobs:
 
           # 4. Create release tarball
           git archive -o "${RUNNER_TEMP}/archive.tar.gz" "${VERSION}"
-          echo "tarball=${RUNNER_TEMP}/archive.tar.gz" >> "${GITHUB_OUTPUT}"
 
       - name: Create GitHub Release
         id: "create-release"
@@ -81,6 +80,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create-release.outputs.upload_url }}
-          asset_path: ${{ steps.create-release.outputs.tarball }}
+          asset_path: ${{ runner.temp }}/archive.tar.gz
           asset_name: engflowapis-${{ steps.tag.outputs.version }}.tar.gz
           asset_content_type: "application/gzip"
