@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - "main"
-      - "yannic-tag-main"
 
 env:
   BAZELISK_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -14,20 +13,20 @@ env:
   OPAL_RPC_CREDENTIALS: ${{ secrets.OPAL_RPC_CREDENTIALS }}
 
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
+  check:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: Build
-  #       run: bazel build //...
+      - name: Build
+        run: bazel build //...
 
   publish:
     runs-on: ubuntu-latest
-    # needs:
-    #   - test
-    if: github.ref == 'refs/heads/yannic-tag-main'
+    needs:
+      - test
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +38,7 @@ jobs:
           GIT_COMMITTER_NAME: "EngFlow"
           GIT_COMMITTER_EMAIL: "noreply@engflow.com"
         run: |
-          VERSION="v$(date -u '+%Y.%m.%d-%H.%M.%S')"
+          VERSION="v$(date -u '%Y.%m.%d-%H.%M.%S')"
 
           # 1. Download `buildozer`
           curl -o "${RUNNER_TEMP}/buildozer" -L "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-linux-amd64"
