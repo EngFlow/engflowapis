@@ -36,9 +36,6 @@ jobs:
         run: |
           VERSION="v$(date -u '+%Y.%m.%d-%H.%M.%S')"
 
-          echo {{ github.ref }}
-          exit 1
-
           # 1. Download `buildozer`
           curl -o "${RUNNER_TEMP}/buildozer" -L "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-linux-amd64"
           chmod +x "${RUNNER_TEMP}/buildozer"
