@@ -33,6 +33,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Create release
+        env:
+          GIT_AUTHOR_NAME: "EngFlow"
+          GIT_AUTHOR_EMAIL: "noreply@engflow.com"
+          GIT_COMMITTER_NAME: "EngFlow"
+          GIT_COMMITTER_EMAIL: "noreply@engflow.com"
         run: |
           VERSION="v$(date -u '+%Y.%m.%d-%H.%M.%S')"
 
@@ -43,7 +48,7 @@ jobs:
           # 2. Update `MODULE.bazel` and commit.
           "${RUNNER_TEMP}/buildozer" "set version ${VERSION}" "//MODULE.bazel:engflowapis"
           git add "MODULE.bazel"
-          git commit --author="EngFlow <noreply@engflow.com>" -m "Release ${VERSION}"
+          git commit -m "Release ${VERSION}"
 
           # 3. Push release tag.
           git tag "${VERSION}" "HEAD"
