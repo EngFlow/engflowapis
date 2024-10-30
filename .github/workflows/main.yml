@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - test
-    if: github.ref == 'refs/heads/yannic-tag-main'
+    # if: github.ref == 'refs/heads/yannic-tag-main'
 
     steps:
       - uses: actions/checkout@v4
@@ -34,6 +34,9 @@ jobs:
       - name: Create release
         run: |
           VERSION="v$(date -u '+%Y.%m.%d-%H.%M.%S')"
+
+          echo {{ github.ref }}
+          exit 1
 
           # 1. Download `buildozer`
           curl -o "${RUNNER_TEMP}/buildozer" -L "https://github.com/bazelbuild/buildtools/releases/download/v7.3.1/buildozer-linux-amd64"
