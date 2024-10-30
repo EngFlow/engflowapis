@@ -26,7 +26,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs:
-      - test
+      - "check"
     if: github.ref == 'refs/heads/yannic-tag-main'
 
     steps:
