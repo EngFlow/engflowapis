@@ -42,31 +42,19 @@ bazel build //...
 
 ## Using the APIs in your Bazel project
 
-To integrate against `engflowapis` from your Bazel project, you must change your
-`WORKSPACE` and `BUILD` files as follows.
+To integrate against `engflowapis` from your Bazel project, you must add a
+dependency on the `engflowapis` module.
 
-This repository is designed to be consumed at HEAD. Please make yourself familiar
-with our versioning policy below before starting to depend on any APIs.
-
-
-### `WORKSPACE`
-
-Include the API in your `WORKSPACE` using `http_archive` and a given commit sha
-(look for the latest one at [engflowapis commit history])
+### `MODULE.bazel`
 
 ```bzl
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-http_archive(
-    name = "com_engflow_engflowapis",
-    sha256 = "a04a2d2a978355c85dff8b1018d12a8e0a1e6692add9de716fd4d1b7aa1e2a0d",
-    strip_prefix = "engflowapis-47aa858b498da13e7863356aaef9c6d05da0a7f2",
-    urls = [
-        "https://github.com/EngFlow/engflowapis/archive/47aa858b498da13e7863356aaef9c6d05da0a7f2.zip",
-    ],
+bazel_dep(
+    name = "engflowapis",
+    version = "<version>",
 )
 ```
 
-This links the `engflowapis` definitions under the name `com_engflow_engflowapis`.
+This links the `engflowapis` definitions under the name `@engflowapis`.
 
 ### `BUILD`
 

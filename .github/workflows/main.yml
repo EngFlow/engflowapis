@@ -34,10 +34,10 @@ jobs:
       - name: Create tag
         id: "tag"
         env:
-          GIT_AUTHOR_NAME: "EngFlow"
-          GIT_AUTHOR_EMAIL: "noreply@engflow.com"
-          GIT_COMMITTER_NAME: "EngFlow"
-          GIT_COMMITTER_EMAIL: "noreply@engflow.com"
+          GIT_AUTHOR_NAME: "EngFlow GitHub Automation"
+          GIT_AUTHOR_EMAIL: "engflow-github-automation@engflow.com"
+          GIT_COMMITTER_NAME: "EngFlow GitHub Automation"
+          GIT_COMMITTER_EMAIL: "engflow-github-automation@engflow.com"
         run: |
           VERSION="$(date -u '+%Y.%m.%d-%H.%M.%S')"
           echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
@@ -72,7 +72,7 @@ jobs:
             ```starlark
             bazel_dep(name = "engflowapis", version = "${{ steps.tag.outputs.version }}")
             ```
-          prerelease: true
+          prerelease: false
 
       - name: Upload Tarball
         id: upload-release-asset 
