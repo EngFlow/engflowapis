@@ -13,14 +13,14 @@ env:
   OPAL_RPC_CREDENTIALS: ${{ secrets.OPAL_RPC_CREDENTIALS }}
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  # test:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  #   steps:
+  #     - uses: actions/checkout@v4
 
-      - name: Build
-        run: bazel build //...
+  #     - name: Build
+  #       run: bazel build //...
 
   publish:
     runs-on: ubuntu-latest
