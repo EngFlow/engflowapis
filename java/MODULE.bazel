@@ -5,7 +5,7 @@ module(
 
 bazel_dep(
     name = "engflowapis",
-    version = "HEAD", # Automatically updated by release pipeline.
+    version = "HEAD",  # Automatically updated by release pipeline.
 )
 bazel_dep(
     name = "grpc-java",
@@ -20,4 +20,3 @@ local_path_override(
     module_name = "engflowapis",
     path = "..",
 )
-

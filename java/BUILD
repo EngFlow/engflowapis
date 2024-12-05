@@ -1,5 +1,3 @@
-load("//bazel:java_rpc_library.bzl", "java_rpc_library")
-
 exports_files(
     [
         "LICENSE",
@@ -8,7 +6,7 @@ exports_files(
 )
 
 java_library(
-    name = "engflowapis_java",
+    name = "engflowapis-java",
     visibility = ["//visibility:public"],
     exports = [
         "//engflow",
