@@ -16,11 +16,24 @@ jobs:
   check:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - repo: "@engflowapis"
+            path: "."
+
+          - repo: "@engflowapis_java"
+            path: "java"
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build
-        run: bazel build //...
+      - name: "${{ matrix.repo }}"
+        run: |
+          cd "${{ matrix.path }}"
+
+          bazel build //...
 
   publish:
     runs-on: ubuntu-latest
