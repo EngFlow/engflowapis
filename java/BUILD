@@ -8,7 +8,7 @@ exports_files(
 )
 
 java_library(
-    name = "engflowapis-java",
+    name = "engflowapis_java",
     visibility = ["//visibility:public"],
     exports = [
         "//engflow",
