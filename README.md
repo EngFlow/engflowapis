@@ -60,50 +60,15 @@ This links the `engflowapis` definitions under the name `@engflowapis`.
 
 #### `java` example
 
-Include the API in your `BUILD` using the rules `java_proto_library`
-and `java_grpc_library` from `io.grpc`. First declare the java proto library by adding as dependency
-each of the required proto definitions, for instance
+To use `EngFlow APIs` from Java, add the following dependency to your
+`MODULE.bazel`:
 
 ```bzl
-load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
-
-java_proto_library(
-    name = "engflowapis_java_proto",
-    visibility = ["//visibility:public"],
-    deps = [
-        "@com_engflow_engflowapis//engflow/auth:user_proto",
-        "@com_engflow_engflowapis//engflow/eventstore/v1:eventstore_proto",
-        "@com_engflow_engflowapis//engflow/eventstore/v1:notifications_proto",
-        "@com_engflow_engflowapis//engflow/notification/v1:notification_queue_proto",
-    ],
+bazel_dep(
+    name = "engflowapis_java",
+    version = "<version>",
 )
 ```
-
-Then add a java grpc library for each grpc service
-
-```bzl
-java_grpc_library(
-    name = "notification_queue_java_grpc",
-    srcs = [
-        "@com_engflow_engflowapis//engflow/notification/v1:notification_queue_proto",
-    ],
-    deps = [
-        ":engflowapis_java_proto",
-    ],
-)
-
-java_grpc_library(
-    name = "eventstore_java_grpc",
-    srcs = [
-        "@com_engflow_engflowapis//engflow/eventstore/v1:eventstore_proto",
-    ],
-    deps = [
-        ":engflowapis_java_proto",
-    ],
-)
-```
-
-Finally, include all three libraries into the dependency array of your targets.
 
 ### Check out a full example
 
