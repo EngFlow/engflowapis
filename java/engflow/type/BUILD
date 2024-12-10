@@ -1,3 +1,5 @@
+load("@rules_java//java:defs.bzl", "java_library", "java_proto_library")
+
 java_library(
     name = "type",
     visibility = ["//visibility:public"],
