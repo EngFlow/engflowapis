@@ -67,7 +67,7 @@ jobs:
               "set version ${VERSION}" \
             "//MODULE.bazel:engflowapis" \
             "//go/MODULE.bazel:engflowapis-go" \
-            "/go/MODULE.bazel:engflowapis" \
+            "//go/MODULE.bazel:engflowapis" \
             "//java/MODULE.bazel:engflowapis-java" \
             "//java/MODULE.bazel:engflowapis"
           git add \
