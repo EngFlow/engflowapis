@@ -19,7 +19,7 @@ package engflow.notification.v1;
 import "google/protobuf/any.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/notification/v1;notificationv1";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/notification/v1;notificationv1";
 
 option java_multiple_files = true;
 option java_outer_classname = "NotificationProtos";

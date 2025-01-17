@@ -20,7 +20,7 @@ import "google/api/field_behavior.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/type;engflowtype";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/type;engflowtype";
 
 option java_multiple_files = true;
 option java_outer_classname = "TimeIntervalProtos";

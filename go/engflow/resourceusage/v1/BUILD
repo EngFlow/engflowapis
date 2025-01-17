@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+go_proto_library(
+    name = "v1",
+    importpath = "github.com/EngFlow/engflowapis/go/engflow/resourceusage/v1",
+    protos = [
+        "@engflowapis//engflow/resourceusage/v1",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//engflow/type",
+    ],
+)

@@ -1,0 +1,12 @@
+# User-specific bazelrc
+.bazelrc.user
+
+# bzlmod lockfile
+MODULE.bazel.lock
+
+# Bazel convinience symlinks.
+/bazel-*
+.ijwb
+
+# macOS-specific excludes.
+.DS_Store

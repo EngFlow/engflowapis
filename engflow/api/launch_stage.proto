@@ -16,7 +16,7 @@ syntax = "proto3";
 
 package engflow.api;
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/api;engflowapi";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/api;engflowapi";
 
 option java_multiple_files = true;
 option java_outer_classname = "LaunchStageProtos";

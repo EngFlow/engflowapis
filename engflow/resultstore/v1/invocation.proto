@@ -21,7 +21,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "engflow/resultstore/v1/environment.proto";
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/resultstore/v1;resultstorev1";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/resultstore/v1;resultstorev1";
 
 option java_multiple_files = true;
 option java_outer_classname = "InvocationProtos";
