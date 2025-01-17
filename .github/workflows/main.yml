@@ -60,8 +60,14 @@ jobs:
           chmod +x "${RUNNER_TEMP}/buildozer"
 
           # 2. Update `MODULE.bazel` and commit.
-          "${RUNNER_TEMP}/buildozer" "set version ${VERSION}" "//MODULE.bazel:engflowapis"
-          git add "MODULE.bazel"
+          "${RUNNER_TEMP}/buildozer" \
+              "set version ${VERSION}" \
+            "//MODULE.bazel:engflowapis" \
+            "//java/MODULE.bazel:engflowapis-java" \
+            "//java/MODULE.bazel:engflowapis"
+          git add \
+            "MODULE.bazel" \
+            "java/MODULE.bazel"
           git commit -m "Release ${VERSION}"
 
           # 3. Push release tag.
