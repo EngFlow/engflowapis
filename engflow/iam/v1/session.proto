@@ -18,7 +18,7 @@ package engflow.iam.v1;
 
 import "google/api/field_behavior.proto";
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/iam/v1;iamv1";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/iam/v1;iamv1";
 
 option java_multiple_files = true;
 option java_outer_classname = "SessionProtos";

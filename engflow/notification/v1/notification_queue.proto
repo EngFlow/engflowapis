@@ -21,7 +21,7 @@ import "google/rpc/status.proto";
 import "engflow/api/options.proto";
 import "engflow/notification/v1/notification.proto";
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/notification/v1;notificationv1";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/notification/v1;notificationv1";
 
 option java_multiple_files = true;
 option java_outer_classname = "NotificationQueueProtos";

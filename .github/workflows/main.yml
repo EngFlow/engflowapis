@@ -23,8 +23,11 @@ jobs:
           - repo: "@engflowapis"
             path: "."
 
-          - repo: "@engflowapis_java"
+          - repo: "@engflowapis-java"
             path: "java"
+
+          - repo: "@engflowapis-go"
+            path: "go"
 
     steps:
       - uses: actions/checkout@v4
@@ -63,10 +66,13 @@ jobs:
           "${RUNNER_TEMP}/buildozer" \
               "set version ${VERSION}" \
             "//MODULE.bazel:engflowapis" \
+            "//go/MODULE.bazel:engflowapis-go" \
+            "/go/MODULE.bazel:engflowapis" \
             "//java/MODULE.bazel:engflowapis-java" \
             "//java/MODULE.bazel:engflowapis"
           git add \
             "MODULE.bazel" \
+            "go/MODULE.bazel" \
             "java/MODULE.bazel"
           git commit -m "Release ${VERSION}"
 
@@ -90,6 +96,18 @@ jobs:
 
             ```starlark
             bazel_dep(name = "engflowapis", version = "${{ steps.tag.outputs.version }}")
+            ```
+            
+            ## Go
+
+            ```starlark
+            bazel_dep(name = "engflowapis-go", version = "${{ steps.tag.outputs.version }}")
+            ```
+            
+            ## Java
+
+            ```starlark
+            bazel_dep(name = "engflowapis-java", version = "${{ steps.tag.outputs.version }}")
             ```
           prerelease: false
 

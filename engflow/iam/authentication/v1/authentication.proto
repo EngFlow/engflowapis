@@ -16,7 +16,7 @@ syntax = "proto3";
 
 package engflow.iam.authentication.v1;
 
-option go_package = "github.com/EngFlow/engflowapis-go/engflow/iam/authentication/v1;authenticationv1";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/iam/authentication/v1;authenticationv1";
 
 import "google/rpc/status.proto";
 import "google/api/field_behavior.proto";
