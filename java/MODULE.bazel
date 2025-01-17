@@ -1,5 +1,5 @@
 module(
-    name = "engflowapis_java",
+    name = "engflowapis-java",
     version = "HEAD",  # Automatically updated by release pipeline.
 )
 
