@@ -32,5 +32,5 @@ message Session {
   string name = 1 [(google.api.field_behavior) = REQUIRED];
 
   // The name of the role this session uses.
-  string role = 2 [(google.api.field_behavior) = REQUIRED];
+  repeated string role = 2 [(google.api.field_behavior) = REQUIRED];
 }
