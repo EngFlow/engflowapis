@@ -6,6 +6,7 @@ proto_library(
     deps = [
         "//engflow/api",
         "//engflow/auth",
+        "//engflow/ci",
         "//engflow/cluster",
         "//engflow/eventstore",
         "//engflow/iam",

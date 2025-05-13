@@ -1,0 +1,79 @@
+// Copyright 2025 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.ci.v1alpha;
+
+import "google/api/field_behavior.proto";
+
+option java_multiple_files = true;
+option java_outer_classname = "BentoRevisionProtos";
+option java_package = "com.engflow.ci.v1alpha.proto.bento_revision";
+
+service BentoRevision {
+  // Creates a new Bento revision and sets it live.
+  //
+  // An error will be reported in the following cases:
+  // * `INVALID_ARGUMENT`: Mandatory fields in the request are empty, or some
+  //   fields contain illegal characters.
+  // * `ALREADY_EXISTS`: A live bento revision with the same bento- and repo
+  //   names already exists. You should update the existing one instead.
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+}
+
+enum CiProvider {
+  BUILDKITE = 0;
+  GITHUB = 1;
+}
+
+message CreateRequest {
+  // Name of the tenant. Same as in RE API v2 calls.
+  string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
+
+  // Name of the Bento. This is how CI jobs will reference it.
+  // Must match the regex "^[a-zA-Z0-9-_]+$".
+  // Together with repo_name they form a unique key.
+  string bento_name = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the GitHub repo where the jobs come from as "OrgName/RepoName",
+  // e.g. "EngFlow/prod". Must match the regex
+  // "^[a-zA-Z0-9-_.]+/[a-zA-Z0-9-_.]+$". Together with bento_name they form a
+  // unique key.
+  string repo_name = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The CI system where jobs will run.
+  CiProvider ci_provider = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The worker pool group where the CI host will run, e.g. "group_linux_arm64".
+  // Must match the regex "^[a-z0-9_]+$".
+  string pool_name = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // The container image that CI jobs will run inside of.
+  // Must be a valid container URL, without a protocol prefix (no "http://",
+  // "https://", "docker://" or similar), and ending with a SHA256-digest, e.g.
+  // "@sha256:0123(...)abcd". Referencing images by tag is not allowed. Must
+  // match the regex "^[a-zA-Z0-9-_./:]+@sha256:[0-9a-f]{64}$".
+  string image_name = 6 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the git branch where jobs come from. Typically "master" or "main".
+  optional string branch_name = 7 [(google.api.field_behavior) = OPTIONAL];
+
+  // Whether it is allowed to take container snapshots after the CI job is
+  // finished. Snapshots can later be loaded for subsequent jobs.
+  // Defaults to "true".
+  optional bool allow_snapshots = 8 [(google.api.field_behavior) = OPTIONAL];
+}
+
+message CreateResponse {}
