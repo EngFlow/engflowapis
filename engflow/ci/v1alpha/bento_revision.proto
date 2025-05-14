@@ -20,7 +20,7 @@ import "google/api/field_behavior.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "BentoRevisionProtos";
-option java_package = "com.engflow.ci.v1alpha.proto.bento_revision";
+option java_package = "com.engflow.ci.v1alpha.proto";
 
 service BentoRevision {
   // Creates a new Bento revision and sets it live.
@@ -30,7 +30,8 @@ service BentoRevision {
   //   fields contain illegal characters.
   // * `ALREADY_EXISTS`: A live bento revision with the same bento- and repo
   //   names already exists. You should update the existing one instead.
-  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Create(CreateBentoRevisionRequest) returns (CreateBentoRevisionResponse) {
+  }
 }
 
 enum CiProvider {
@@ -38,7 +39,7 @@ enum CiProvider {
   GITHUB = 1;
 }
 
-message CreateRequest {
+message CreateBentoRevisionRequest {
   // Name of the tenant. Same as in RE API v2 calls.
   string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
 
@@ -58,7 +59,7 @@ message CreateRequest {
 
   // The worker pool group where the CI host will run, e.g. "group_linux_arm64".
   // Must match the regex "^[a-z0-9_]+$".
-  string pool_name = 5 [(google.api.field_behavior) = REQUIRED];
+  string pool_group_name = 5 [(google.api.field_behavior) = REQUIRED];
 
   // The container image that CI jobs will run inside of.
   // Must be a valid container URL, without a protocol prefix (no "http://",
@@ -76,4 +77,4 @@ message CreateRequest {
   optional bool allow_snapshots = 8 [(google.api.field_behavior) = OPTIONAL];
 }
 
-message CreateResponse {}
+message CreateBentoRevisionResponse {}
