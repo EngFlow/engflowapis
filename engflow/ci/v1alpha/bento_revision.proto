@@ -32,6 +32,9 @@ service BentoRevision {
   //   names already exists. You should update the existing one instead.
   rpc Create(CreateBentoRevisionRequest) returns (CreateBentoRevisionResponse) {
   }
+
+  // Lists all live Bento revisions.
+  rpc List(ListBentoRevisionsRequest) returns (ListBentoRevisionsResponse) {}
 }
 
 enum CiProvider {
@@ -78,3 +81,48 @@ message CreateBentoRevisionRequest {
 }
 
 message CreateBentoRevisionResponse {}
+
+message ListBentoRevisionsRequest {
+  // Name of the tenant. Same as in RE API v2 calls.
+  string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Info about a Bento revision. Used in responses from the server. The field
+// qualifiers (required/optional) indicate whether the field is always filled
+// out or may be empty (respectively).
+message BentoRevisionInfo {
+  // Name of the Bento. This is how CI jobs reference it. Never empty.
+  string bento_name = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the GitHub repo where the jobs come from, as "OrgName/RepoName",
+  // e.g. "EngFlow/prod". Never empty.
+  string repo_name = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The CI system where jobs come from. Never empty.
+  CiProvider ci_provider = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The worker pool group where the CI host will run, e.g. "group_linux_arm64".
+  // Never empty.
+  string pool_group_name = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // The container image that CI jobs will run inside of. Never empty.
+  string image_name = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the git branch where jobs come from. Typically "master" or "main".
+  // May be empty.
+  optional string branch_name = 6 [(google.api.field_behavior) = OPTIONAL];
+
+  // Whether it is allowed to take container snapshots after the CI job is
+  // finished. Never empty.
+  bool allow_snapshots = 7 [(google.api.field_behavior) = REQUIRED];
+
+  // Timestamp when the Bento was created. Never empty.
+  string created_at = 8 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of user (principal) that created the Bento. May be empty.
+  optional string created_by = 9 [(google.api.field_behavior) = OPTIONAL];
+}
+
+message ListBentoRevisionsResponse {
+  repeated BentoRevisionInfo revisions = 1;
+}
