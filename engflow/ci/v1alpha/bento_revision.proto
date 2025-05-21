@@ -60,9 +60,9 @@ message CreateBentoRevisionRequest {
   // The CI system where jobs will run.
   CiProvider ci_provider = 4 [(google.api.field_behavior) = REQUIRED];
 
-  // The worker pool group where the CI host will run, e.g. "group_linux_arm64".
+  // The worker pool to run the CI host, e.g. "linux_arm64".
   // Must match the regex "^[a-z0-9_]+$".
-  string pool_group_name = 5 [(google.api.field_behavior) = REQUIRED];
+  string pool_name = 5 [(google.api.field_behavior) = REQUIRED];
 
   // The container image that CI jobs will run inside of.
   // Must be a valid container URL, without a protocol prefix (no "http://",
@@ -101,9 +101,9 @@ message BentoRevisionInfo {
   // The CI system where jobs come from. Never empty.
   CiProvider ci_provider = 3 [(google.api.field_behavior) = REQUIRED];
 
-  // The worker pool group where the CI host will run, e.g. "group_linux_arm64".
+  // The worker pool to run the CI host, e.g. "linux_arm64".
   // Never empty.
-  string pool_group_name = 4 [(google.api.field_behavior) = REQUIRED];
+  string pool_name = 4 [(google.api.field_behavior) = REQUIRED];
 
   // The container image that CI jobs will run inside of. Never empty.
   string image_name = 5 [(google.api.field_behavior) = REQUIRED];
