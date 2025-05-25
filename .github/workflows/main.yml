@@ -124,5 +124,3 @@ jobs:
         uses: "./.github/workflows/publish-to-bcr.yaml"
         with:
           tag_name: "${{ steps.tag.outputs.version }}"
-        secrets:
-          ENGFLOW_AUTOMATION_PUBLIC_PAT: ${{ secrets.ENGFLOW_AUTOMATION_PUBLIC_PAT }}
