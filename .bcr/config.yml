@@ -1,1 +1,8 @@
-# Nothing to configure.
+# A list of Bazel modules we want to publish.
+#
+# Each module must have a directory in `github.com/EngFlow/engflowapis/.bcr`
+# with the configuration to publish the module.
+moduleRoots:
+  - "."
+  - "go"
+  - "java"
