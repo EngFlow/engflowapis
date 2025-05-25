@@ -121,6 +121,6 @@ jobs:
           asset_content_type: "application/gzip"
 
       - name: "Upload to BCR"
-        uses: "./.github/workflows/publish-to-bcr.yaml"
+        uses: ./.github/workflows/publish-to-bcr.yaml
         with:
           tag_name: "${{ steps.tag.outputs.version }}"
