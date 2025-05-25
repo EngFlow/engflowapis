@@ -2,7 +2,7 @@ load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
 
 proto_library(
     name = "v1alpha",
-    visibility = ["//engflow/ci:__pkg__"],
+    visibility = ["//visibility:public"],
     deps = [
         ":bento_revision_proto",
     ],
@@ -13,9 +13,7 @@ proto_library(
     srcs = [
         "bento_revision.proto",
     ],
-    visibility = [
-        "//java/engflow/ci/v1alpha:__pkg__",
-    ],
+    visibility = ["//visibility:public"],
     deps = [
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
