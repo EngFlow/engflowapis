@@ -121,13 +121,8 @@ jobs:
           asset_content_type: "application/gzip"
 
       - name: "Upload to BCR"
-        uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.1.0"
+        uses: "./.github/workflows/publish-to-bcr.yaml"
         with:
           tag_name: "${{ steps.tag.outputs.version }}"
-          registry_fork: "https://github.com/EngFlow/bazel-central-registry"
-        permissions:
-          attestations: write
-          contents: write
-          id-token: write
         secrets:
-          publish_token: "${{ secrets.ENGFLOW_AUTOMATION_PUBLIC_PAT }}"
+          ENGFLOW_AUTOMATION_PUBLIC_PAT: ${{ secrets.ENGFLOW_AUTOMATION_PUBLIC_PAT }}

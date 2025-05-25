@@ -1,0 +1,34 @@
+# Publishes to the Bazel Central Registry.
+name: "Publish to the Bazel Central Registry"
+
+on:
+  # Run from release.yml.
+  workflow_call:
+    inputs:
+      tag_name:
+        required: true
+        type: string
+    secrets:
+      ENGFLOW_AUTOMATION_PUBLIC_PAT:
+        required: true
+
+  # In case of problems, enable manual dispatch from the GitHub UI.
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        required: true
+        type: string
+
+jobs:
+  publish-to-bcr:
+    uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.1.0"
+    with:
+      tag_name: "${{ inputs.tag_name }}"
+      registry_fork: "EngFlow/bazel-central-registry"
+      draft: false
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+    secrets:
+      publish_token: "${{ secrets.ENGFLOW_AUTOMATION_PUBLIC_PAT }}"
