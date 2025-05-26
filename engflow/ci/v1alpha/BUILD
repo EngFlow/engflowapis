@@ -9,7 +9,7 @@ proto_library(
 )
 
 proto_library(
-    name = "bento_revision_proto",
+    name = "bento_revision",
     srcs = [
         "bento_revision.proto",
     ],
@@ -17,4 +17,14 @@ proto_library(
     deps = [
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],
+)
+
+alias(
+    name = "bento_revision_proto",
+    actual = ":bento_revision",
+    deprecation = "Please depend on ':bento_revision' instead.",
+    tags = [
+        "manual",
+    ],
+    visibility = ["//visibility:public"],
 )
