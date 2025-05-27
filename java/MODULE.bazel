@@ -1,11 +1,11 @@
 module(
     name = "engflowapis-java",
-    version = "HEAD",  # Automatically updated by release pipeline.
+    version = "2025.05.27-06.18.13",  # Automatically updated by release pipeline.
 )
 
 bazel_dep(
     name = "engflowapis",
-    version = "HEAD",  # Automatically updated by release pipeline.
+    version = "2025.05.27-06.18.13",  # Automatically updated by release pipeline.
 )
 bazel_dep(
     name = "grpc-java",
