@@ -15,7 +15,7 @@ tasks:
     platform: ${{ platform }}
     bazel: ${{ bazel }}
     build_targets:
-      - "@engflowapis//..."
+      - "@engflowapis-java//..."
 
 incompatible_flags:
   # Disabled because of a transitive dependency on `rules_foreign_cc` that is

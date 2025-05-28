@@ -1,0 +1,5 @@
+{
+  "integrity": "**leave this alone**",
+  "url": "https://github.com/EngFlow/engflowapis/releases/download/{TAG}/engflowapis-{TAG}.tar.gz",
+  "strip_prefix": "go"
+}

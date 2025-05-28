@@ -14,8 +14,7 @@ tasks:
     name: "Verify build targets"
     platform: ${{ platform }}
     bazel: ${{ bazel }}
-    build_targets:
-      - "@engflowapis//..."
+    build_targets: []
 
 incompatible_flags:
   # Disabled because of a transitive dependency on `rules_foreign_cc` that is

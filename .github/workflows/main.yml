@@ -119,3 +119,8 @@ jobs:
           asset_path: ${{ runner.temp }}/archive.tar.gz
           asset_name: engflowapis-${{ steps.tag.outputs.version }}.tar.gz
           asset_content_type: "application/gzip"
+
+      - name: "Upload to BCR"
+        uses: "./.github/workflows/publish-to-bcr.yaml"
+        with:
+          tag_name: "${{ steps.tag.outputs.version }}"
