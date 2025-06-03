@@ -35,6 +35,24 @@ service BentoRevision {
 
   // Lists all live Bento revisions.
   rpc List(ListBentoRevisionsRequest) returns (ListBentoRevisionsResponse) {}
+
+  // Updates or creates a Bento revision, atomically.
+  //
+  // If a live revision with the same bento- and repo names exists, first it'll
+  // be set non-live, then the new revision is created and set live. If there
+  // was no such Bento, it will be created. The entire operation is atomic.
+  //
+  // If the operation fails, the transaction is rolled back, the old revision
+  // stays live and no new one is created.
+  //
+  // An error will be reported in the following cases:
+  // * `INVALID_ARGUMENT`: Mandatory fields in the request are empty, or some
+  //   fields contain illegal characters.
+  // * `ALREADY_EXISTS`: The exact Bento revision to update is not found (maybe
+  //   it was concurrently updated), but a Bento with the same bento- and repo
+  //   names already exists.
+  rpc Update(UpdateBentoRevisionRequest) returns (UpdateBentoRevisionResponse) {
+  }
 }
 
 enum CiProvider {
@@ -121,8 +139,23 @@ message BentoRevisionInfo {
 
   // Name of user (principal) that created the Bento. May be empty.
   optional string created_by = 9 [(google.api.field_behavior) = OPTIONAL];
+
+  // The ID of the Bento revision. Used when updating a revision. Never empty.
+  int64 id = 10 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListBentoRevisionsResponse {
   repeated BentoRevisionInfo revisions = 1;
 }
+
+message UpdateBentoRevisionRequest {
+  // The ID of the Bento revision.
+  int64 id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The updated Bento's parameters. Every field should be filled out, not just
+  // changed ones; values from the old revision won't be used.
+  CreateBentoRevisionRequest params = 2
+      [(google.api.field_behavior) = REQUIRED];
+}
+
+message UpdateBentoRevisionResponse {}
