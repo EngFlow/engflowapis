@@ -58,6 +58,7 @@ service BentoRevision {
 enum CiProvider {
   BUILDKITE = 0;
   GITHUB = 1;
+  CUSTOM = 2;
 }
 
 message CreateBentoRevisionRequest {
