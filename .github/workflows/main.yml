@@ -120,6 +120,9 @@ jobs:
           asset_name: engflowapis-${{ steps.tag.outputs.version }}.tar.gz
           asset_content_type: "application/gzip"
 
+    outputs:
+      version: "${{ steps.tag.outputs.version }}"
+
   upload_to_bcr:
     needs:
       - "publish"
@@ -127,5 +130,5 @@ jobs:
 
     uses: "./.github/workflows/publish-to-bcr.yaml"
     with:
-      tag_name: "${{ steps.tag.outputs.version }}"
+      tag_name: "${{ needs.publish.outputs.version }}"
     secrets: "inherit"
