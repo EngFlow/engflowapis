@@ -127,9 +127,10 @@ message BentoRevisionInfo {
   // The container image that CI jobs will run inside of. Never empty.
   string image_name = 5 [(google.api.field_behavior) = REQUIRED];
 
-  // Name of the git branch where jobs come from. Typically "master" or "main".
-  // May be empty.
-  optional string branch_name = 6 [(google.api.field_behavior) = OPTIONAL];
+  // Name of the git branch for taking snapshots. Typically "master" or "main".
+  // If the job comes from this branch (and allow_snapshots=true, and a few more
+  // conditions hold), then we may take a snapshot.
+  string branch_name = 6 [(google.api.field_behavior) = REQUIRED];
 
   // Whether it is allowed to take container snapshots after the CI job is
   // finished. Never empty.
