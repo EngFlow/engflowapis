@@ -25,6 +25,8 @@ jobs:
       registry_fork: "EngFlow/bazel-central-registry"
       draft: false
       attest: false
+      author_name: "EngFlow Inc."
+      author_email: "212036618+engflow-automation-public@users.noreply.github.com"
     permissions:
       attestations: write
       contents: write
