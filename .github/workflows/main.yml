@@ -51,7 +51,7 @@ jobs:
         id: "tag"
         env:
           GIT_AUTHOR_NAME: "EngFlow GitHub Automation"
-          GIT_AUTHOR_EMAIL: "engflow-github-automation@engflow.com"
+          GIT_AUTHOR_EMAIL: "engflow-github-automation+public@engflow.com"
           GIT_COMMITTER_NAME: "EngFlow GitHub Automation"
           GIT_COMMITTER_EMAIL: "engflow-github-automation@engflow.com"
         run: |
