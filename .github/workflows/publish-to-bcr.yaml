@@ -22,9 +22,11 @@ jobs:
     uses: "EngFlow/publish-to-bcr/.github/workflows/publish.yaml@8b992339c75a29065d67665a13f21008c94593fc"
     with:
       tag_name: "${{ inputs.tag_name }}"
+      #TODO: replace EngFlow for bazel-contrib once https://github.com/bazel-contrib/publish-to-bcr/pull/279 is merged
       registry_fork: "EngFlow/bazel-central-registry"
       draft: false
       attest: false
+      # use https://github.com/engflow-automation-public as public-facing identity in pushes to BCR
       author_name: "EngFlow Inc."
       author_email: "212036618+engflow-automation-public@users.noreply.github.com"
     permissions:
