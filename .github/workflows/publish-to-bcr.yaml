@@ -26,7 +26,7 @@ jobs:
       registry_fork: "EngFlow/bazel-central-registry"
       draft: false
       attest: false
-      # use https://github.com/engflow-automation-public as public-facing identity in pushes to BCR
+      # use https://github.com/engflow-automation-public as public-facing identity in pushes to BCR via .github/workflows/publish-to-bcr.yaml
       author_name: "EngFlow Inc."
       author_email: "212036618+engflow-automation-public@users.noreply.github.com"
     permissions:
