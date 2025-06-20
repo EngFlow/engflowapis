@@ -18,7 +18,8 @@ on:
 
 jobs:
   publish-to-bcr:
-    uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.1.0"
+    #uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.1.0"
+    uses: "EngFlow/publish-to-bcr/.github/workflows/publish.yaml@8b992339c75a29065d67665a13f21008c94593fc"
     with:
       tag_name: "${{ inputs.tag_name }}"
       registry_fork: "EngFlow/bazel-central-registry"
