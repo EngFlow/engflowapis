@@ -1,5 +1,8 @@
 load("@com_google_protobuf//bazel:java_proto_library.bzl", "java_proto_library")
 load("@rules_java//java:defs.bzl", "java_library")
+load("//bazel:java_rpc_library.bzl", "java_rpc_library")
+
+package(default_package_metadata = ["@engflowapis//internal:license"])
 
 java_library(
     name = "type",
