@@ -46,12 +46,17 @@ service BentoRevision {
   // stays live and no new one is created.
   //
   // An error will be reported in the following cases:
+  // * `NOT_FOUND`: referenced Bento does not exist.
   // * `INVALID_ARGUMENT`: Mandatory fields in the request are empty, or some
   //   fields contain illegal characters.
   // * `ALREADY_EXISTS`: The exact Bento revision to update is not found (maybe
   //   it was concurrently updated), but a Bento with the same bento- and repo
   //   names already exists.
   rpc Update(UpdateBentoRevisionRequest) returns (UpdateBentoRevisionResponse) {
+  }
+
+  // Deletes a bento revision.
+  rpc Delete(DeleteBentoRevisionRequest) returns (DeleteBentoRevisionResponse) {
   }
 }
 
@@ -161,3 +166,19 @@ message UpdateBentoRevisionRequest {
 }
 
 message UpdateBentoRevisionResponse {}
+
+message DeleteBentoRevisionRequest {
+  // Name of the tenant. Same as in RE API v2 calls.
+  string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
+
+  // The ID of the Bento revision.
+  int64 id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Must match with ID.
+  string repo_name = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Must match with ID.
+  string bento_name = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+message DeleteBentoRevisionResponse {}
