@@ -1,6 +1,4 @@
-load("@io_bazel_rules_go//proto:def.bzl", "go_grpc_library", "go_proto_library")
-
-package(default_package_metadata = ["@engflowapis//internal:license"])
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 go_proto_library(
     name = "api",
