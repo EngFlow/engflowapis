@@ -70,6 +70,15 @@ jobs:
             "//go/MODULE.bazel:engflowapis" \
             "//java/MODULE.bazel:engflowapis-java" \
             "//java/MODULE.bazel:engflowapis"
+          "${RUNNER_TEMP}/buildozer" \
+              "set purl pkg:bazel/engflowapis@${VERSION}" \
+            "//:package_metadata"
+          "${RUNNER_TEMP}/buildozer" \
+              "set purl pkg:bazel/engflowapis-go@${VERSION}" \
+            "//go:package_metadata"
+          "${RUNNER_TEMP}/buildozer" \
+              "set purl pkg:bazel/engflowapis-java@${VERSION}" \
+            "//java:package_metadata"
           git add \
             "MODULE.bazel" \
             "go/MODULE.bazel" \
