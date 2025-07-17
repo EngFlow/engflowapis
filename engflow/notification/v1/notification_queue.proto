@@ -146,7 +146,7 @@ message PullNotificationRequest {
   // This is primarily used for tracing which client received the notification
   // in case there are multiple clients concurrently pulling from a queue.
   //
-  // This *MUST* be set on the first request, and *MAY* be set on subsequent
+  // This *SHOULD* be set on the first request and *MAY* be set on subsequent
   // requests. If set on subsequent requests, it *MUST* have the same value as
   // in the initial request.
   //
