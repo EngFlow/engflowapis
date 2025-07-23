@@ -147,6 +147,11 @@ message BentoRevisionInfo {
   // Name of user (principal) that created the Bento. May be empty.
   optional string created_by = 9 [(google.api.field_behavior) = OPTIONAL];
 
+  // Timestamp when the Bento's latest snapshot was created (if one exists). May
+  // be empty.
+  optional string latest_snapshot_at = 11
+      [(google.api.field_behavior) = OPTIONAL];
+
   // The ID of the Bento revision. Used when updating a revision. Never empty.
   int64 id = 10 [(google.api.field_behavior) = REQUIRED];
 }
