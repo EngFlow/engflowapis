@@ -4,8 +4,13 @@ module(
 )
 
 bazel_dep(
-    name = "rules_proto",
-    version = "6.0.2",
+    name = "googleapis",
+    version = "0.0.0-20240819-fe8ba054a",
+    repo_name = "com_google_googleapis",
+)
+bazel_dep(
+    name = "package_metadata",
+    version = "0.0.3",
 )
 bazel_dep(
     name = "protobuf",
@@ -13,7 +18,6 @@ bazel_dep(
     repo_name = "com_google_protobuf",
 )
 bazel_dep(
-    name = "googleapis",
-    version = "0.0.0-20240819-fe8ba054a",
-    repo_name = "com_google_googleapis",
+    name = "rules_proto",
+    version = "6.0.2",
 )

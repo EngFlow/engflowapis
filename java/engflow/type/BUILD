@@ -1,6 +1,8 @@
 load("@com_google_protobuf//bazel:java_proto_library.bzl", "java_proto_library")
 load("@rules_java//java:defs.bzl", "java_library")
 
+package(default_package_metadata = ["//:package_metadata"])
+
 java_library(
     name = "type",
     visibility = ["//visibility:public"],

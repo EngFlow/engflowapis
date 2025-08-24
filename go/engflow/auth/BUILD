@@ -1,5 +1,7 @@
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
+package(default_package_metadata = ["//:package_metadata"])
+
 go_proto_library(
     name = "auth",
     compilers = [
