@@ -61,9 +61,11 @@ service BentoRevision {
 }
 
 enum CiProvider {
-  BUILDKITE = 0;
+  LEGACY_BUILDKITE = 0;  // This enum is only used in the bento-revision UI
   GITHUB = 1;
-  CUSTOM = 2;
+  BUILDKITE_PROVIDER =
+      2;  // not BUILDKITE to avoid conflict with cistatus.proto
+  CUSTOM = 3;
 }
 
 message CreateBentoRevisionRequest {
