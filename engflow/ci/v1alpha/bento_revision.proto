@@ -21,6 +21,7 @@ import "google/api/field_behavior.proto";
 option java_multiple_files = true;
 option java_outer_classname = "BentoRevisionProtos";
 option java_package = "com.engflow.ci.v1alpha.proto";
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/ci/v1alpha";
 
 service BentoRevision {
   // Creates a new Bento revision and sets it live.
