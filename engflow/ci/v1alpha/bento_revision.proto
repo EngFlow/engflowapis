@@ -107,7 +107,9 @@ message CreateBentoRevisionRequest {
   optional bool allow_snapshots = 8 [(google.api.field_behavior) = OPTIONAL];
 }
 
-message CreateBentoRevisionResponse {}
+message CreateBentoRevisionResponse {
+  int64 id = 1;
+}
 
 message ListBentoRevisionsRequest {
   // Name of the tenant. Same as in RE API v2 calls.
@@ -173,7 +175,9 @@ message UpdateBentoRevisionRequest {
       [(google.api.field_behavior) = REQUIRED];
 }
 
-message UpdateBentoRevisionResponse {}
+message UpdateBentoRevisionResponse {
+  int64 id = 1;
+}
 
 message DeleteBentoRevisionRequest {
   // Name of the tenant. Same as in RE API v2 calls.
