@@ -5,15 +5,25 @@ module(
 
 bazel_dep(
     name = "rules_proto",
-    version = "6.0.2",
+    version = "7.1.0",
 )
 bazel_dep(
     name = "protobuf",
-    version = "28.2",
+    version = "33.4",
     repo_name = "com_google_protobuf",
 )
 bazel_dep(
     name = "googleapis",
-    version = "0.0.0-20240819-fe8ba054a",
+    version = "0.0.0-20260130-c0fcb356",
     repo_name = "com_google_googleapis",
+)
+single_version_override(
+    module_name = "googleapis",
+    patch_strip = 1,
+    patches = [
+        # Add missing loads for rules that are no longer builtin.
+        "third_party/googleapis/loads.patch",
+        # Remove "discovery" feature that we don't use and loads disruptive dependencies.
+        "third_party/googleapis/discovery.patch",
+    ],
 )
