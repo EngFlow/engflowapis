@@ -9,9 +9,14 @@ bazel_dep(
 )
 bazel_dep(
     name = "protobuf",
-    version = "33.4",
+    version = "28.2",
     repo_name = "com_google_protobuf",
 )
+single_version_override(
+    module_name = "protobuf",
+    version = "33.4",
+)
+
 bazel_dep(
     name = "googleapis",
     version = "0.0.0-20260130-c0fcb356",

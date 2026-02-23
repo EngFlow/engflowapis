@@ -18,12 +18,7 @@ on:
 
 jobs:
   publish-to-bcr:
-    # uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v0.1.0"
-    #
-    # TODO(linear/SEC-467): Replace for the uses clause above at the correct
-    #     version once https://github.com/bazel-contrib/publish-to-bcr/pull/279
-    #     is merged.
-    uses: "EngFlow/publish-to-bcr/.github/workflows/publish.yaml@598b6a8643cac24875a3e8454b41a3891b4c6d09"
+    uses: "bazel-contrib/publish-to-bcr/.github/workflows/publish.yaml@v1.1.0"
     with:
       tag_name: "${{ inputs.tag_name }}"
       registry_fork: "EngFlow/bazel-central-registry"

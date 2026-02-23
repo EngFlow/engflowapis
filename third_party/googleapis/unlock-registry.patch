@@ -1,0 +1,13 @@
+diff --git a/googleapis-rules-registry/private/extensions/rules_registry.bzl b/googleapis-rules-registry/private/extensions/rules_registry.bzl
+index 6f430fc..8bd2502 100644
+--- a/googleapis-rules-registry/private/extensions/rules_registry.bzl
++++ b/googleapis-rules-registry/private/extensions/rules_registry.bzl
+@@ -73,8 +73,6 @@ def _rules_registry_impl(module_ctx):
+     rules = {name: "" for name in RULE_TO_FLAVOR.keys()}
+ 
+     for module in module_ctx.modules:
+-        if module.name != "googleapis" and not module.name.startswith("googleapis-"):
+-            fail("This extension is internal to googleapis and cannot be accessed from " + module.name)
+         for rule in module.tags.register:
+             if rule.name not in rules:
+                 fail("Unknown rule: %s" % rule.name)
