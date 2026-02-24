@@ -1,6 +1,6 @@
 module(
     name = "engflowapis",
-    version = "HEAD",  # Automatically updated by release pipeline.
+    version = "2026.02.24-19.05.16",  # Automatically updated by release pipeline.
 )
 
 bazel_dep(
