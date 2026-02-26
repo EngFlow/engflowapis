@@ -43,6 +43,9 @@ jobs:
           - repo: "@engflowapis-go"
             path: "go"
 
+    env:
+      USE_BAZEL_VERSION: "{{ matrix.bazel }}"
+
     steps:
       - uses: actions/checkout@v4
 
@@ -50,7 +53,7 @@ jobs:
         run: |
           cd "${{ matrix.path }}"
 
-          USE_BAZEL_VERSION="${{ matrix.bazel }}" bazel build //...
+          bazel build //...
 
   publish:
     runs-on: ubuntu-latest
