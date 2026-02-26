@@ -44,7 +44,7 @@ jobs:
             path: "go"
 
     env:
-      USE_BAZEL_VERSION: "{{ matrix.bazel }}"
+      USE_BAZEL_VERSION: "${{ matrix.bazel }}"
 
     steps:
       - uses: actions/checkout@v4
