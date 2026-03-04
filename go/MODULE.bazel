@@ -15,7 +15,7 @@ local_path_override(
 bazel_dep(
     name = "rules_go",
     version = "0.50.1",
-    repo_name = "io_bazel_rules_go",
+    repo_name = "rules_go",
 )
 single_version_override(
     module_name = "rules_go",
@@ -95,5 +95,5 @@ rules_registry = use_extension(
 )
 rules_registry.register(
     name = "go_grpc_library",
-    file = "@io_bazel_rules_go//proto:def.bzl",
+    file = "@rules_go//proto:def.bzl",
 )
