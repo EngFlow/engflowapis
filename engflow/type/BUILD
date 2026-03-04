@@ -1,4 +1,4 @@
-load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
 
 proto_library(
     name = "type",
@@ -73,8 +73,8 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         "@com_google_googleapis//google/api:field_behavior_proto",
-        "@com_google_protobuf//:duration_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "@protobuf//:duration_proto",
+        "@protobuf//:timestamp_proto",
     ],
 )
 

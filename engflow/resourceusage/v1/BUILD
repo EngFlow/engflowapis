@@ -1,4 +1,4 @@
-load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
 
 proto_library(
     name = "v1",
@@ -18,7 +18,7 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_google_protobuf//:duration_proto",
+        "@protobuf//:duration_proto",
     ],
 )
 
@@ -30,8 +30,8 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         "//engflow/type:key_value_pair",
-        "@com_google_protobuf//:any_proto",
-        "@com_google_protobuf//:timestamp_proto",
+        "@protobuf//:any_proto",
+        "@protobuf//:timestamp_proto",
     ],
 )
 
@@ -53,6 +53,6 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_google_protobuf//:duration_proto",
+        "@protobuf//:duration_proto",
     ],
 )

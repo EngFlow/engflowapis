@@ -1,5 +1,5 @@
-load("@com_google_protobuf//bazel:proto_library.bzl", "proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_descriptor_set")
+load("@protobuf//bazel:proto_descriptor_set.bzl", "proto_descriptor_set")
+load("@protobuf//bazel:proto_library.bzl", "proto_library")
 
 exports_files(
     [

@@ -4,13 +4,8 @@ module(
 )
 
 bazel_dep(
-    name = "rules_proto",
-    version = "7.1.0",
-)
-bazel_dep(
     name = "protobuf",
     version = "28.2",
-    repo_name = "com_google_protobuf",
 )
 single_version_override(
     module_name = "protobuf",
