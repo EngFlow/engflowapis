@@ -105,6 +105,11 @@ message CreateBentoRevisionRequest {
   // finished. Snapshots can later be loaded for subsequent jobs.
   // Defaults to "true".
   optional bool allow_snapshots = 8 [(google.api.field_behavior) = OPTIONAL];
+
+  // Runner invocation JSON. This is a json object which controls
+  // advanced options. Refer to the documentation for supported
+  // fields.
+  optional string invocation_json = 9 [(google.api.field_behavior) = OPTIONAL];
 }
 
 message CreateBentoRevisionResponse {
@@ -159,6 +164,10 @@ message BentoRevisionInfo {
 
   // The ID of the Bento revision. Used when updating a revision. Never empty.
   int64 id = 10 [(google.api.field_behavior) = REQUIRED];
+
+  // Runner invocation JSON. This json controls advanced
+  // options. Refer to the public documentation for supported fields.
+  optional string invocation_json = 12 [(google.api.field_behavior) = OPTIONAL];
 }
 
 message ListBentoRevisionsResponse {
