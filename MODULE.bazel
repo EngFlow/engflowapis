@@ -3,15 +3,21 @@ module(
     version = "HEAD",  # Automatically updated by release pipeline.
 )
 
-bazel_dep(
-    name = "protobuf",
-    version = "28.2",
-)
-single_version_override(
+# We now require protobuf >= v34.0 since we've removed the rules_proto
+# dependency and import @protobuf//bazel:proto_descriptor_set.bzl for
+# //:proto_descriptor_set.
+bazel_dep(name = "protobuf", version = "34.0")
+
+# Remove the git_override (and hopefully rules_go) once v34.1 is out:
+# https://github.com/protocolbuffers/protobuf/issues/25561#issuecomment-4070704339
+git_override(
     module_name = "protobuf",
-    version = "33.4",
+    # https://github.com/protocolbuffers/protobuf/pull/26201
+    commit = "f08d70329211dfd74584c3761da5da5e32ab34f3",
+    remote = "https://github.com/protocolbuffers/protobuf",
 )
 
+bazel_dep(name = "rules_go", version = "0.60.0")
 bazel_dep(
     name = "googleapis",
     version = "0.0.0-20260130-c0fcb356",

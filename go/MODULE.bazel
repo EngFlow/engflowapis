@@ -34,7 +34,6 @@ single_version_override(
 bazel_dep(
     name = "protobuf",
     version = "28.2",
-    repo_name = "com_google_protobuf",
 )
 single_version_override(
     module_name = "protobuf",
@@ -73,7 +72,7 @@ use_repo(
     "org_golang_google_protobuf",
 )
 
-bazel_dep(name = "bazel_remote_apis")
+bazel_dep(name = "bazel_remote_apis", version = "2.12.0")
 git_override(
     module_name = "bazel_remote_apis",
     # Corresponds to: tag = "v2.12.0"
