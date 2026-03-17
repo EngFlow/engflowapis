@@ -1,11 +1,11 @@
 module(
     name = "engflowapis-go",
-    version = "HEAD",  # Automatically updated by release pipeline.
+    version = "2026.03.17-16.48.33",  # Automatically updated by release pipeline.
 )
 
 bazel_dep(
     name = "engflowapis",
-    version = "HEAD",  # Automatically updated by release pipeline.
+    version = "2026.03.17-16.48.33",  # Automatically updated by release pipeline.
 )
 local_path_override(
     module_name = "engflowapis",
