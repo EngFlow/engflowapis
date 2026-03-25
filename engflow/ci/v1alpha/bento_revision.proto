@@ -119,6 +119,10 @@ message CreateBentoRevisionResponse {
 message ListBentoRevisionsRequest {
   // Name of the tenant. Same as in RE API v2 calls.
   string instance_name = 1 [(google.api.field_behavior) = OPTIONAL];
+
+  // If true, returns all revisions including non-live ones.
+  // If false or unset, returns only live revisions (default behavior).
+  bool history = 2 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Info about a Bento revision. Used in responses from the server. The field
