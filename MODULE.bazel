@@ -1,6 +1,6 @@
 module(
     name = "engflowapis",
-    version = "HEAD",  # Automatically updated by release pipeline.
+    version = "2026.03.26-06.45.40",  # Automatically updated by release pipeline.
 )
 
 # We now require protobuf >= v34.0 since we've removed the rules_proto
