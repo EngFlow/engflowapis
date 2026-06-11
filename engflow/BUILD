@@ -13,6 +13,7 @@ proto_library(
         "//engflow/notification",
         "//engflow/resourceusage",
         "//engflow/resultstore",
+        "//engflow/secret",
         "//engflow/type",
     ],
 )
