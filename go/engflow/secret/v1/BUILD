@@ -9,5 +9,6 @@ go_proto_library(
         "@rules_go//proto:go_proto",
     ],
     importpath = "github.com/EngFlow/engflowapis/go/engflow/secret/v1",
-    protos = ["@engflowapis//engflow/secret/v1:secret"],
+    protos = ["@engflowapis//engflow/secret/v1"],
+    deps = ["//engflow/type"],
 )
