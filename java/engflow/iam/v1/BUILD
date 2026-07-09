@@ -6,6 +6,8 @@ java_library(
     name = "v1",
     visibility = ["//visibility:public"],
     exports = [
+        ":group_java_proto",
+        ":group_service_java_rpc",
         ":identity_and_access_management_java_rpc",
         ":policy_java_proto",
         ":role_java_proto",
@@ -25,6 +27,25 @@ java_proto_library(
     name = "identity_and_access_management_java_proto",
     visibility = ["//visibility:public"],
     deps = ["@engflowapis//engflow/iam/v1:identity_and_access_management"],
+)
+
+java_rpc_library(
+    name = "group_service_java_rpc",
+    srcs = ["@engflowapis//engflow/iam/v1:group_service"],
+    visibility = ["//visibility:public"],
+    deps = [":group_service_java_proto"],
+)
+
+java_proto_library(
+    name = "group_service_java_proto",
+    visibility = ["//visibility:public"],
+    deps = ["@engflowapis//engflow/iam/v1:group_service"],
+)
+
+java_proto_library(
+    name = "group_java_proto",
+    visibility = ["//visibility:public"],
+    deps = ["@engflowapis//engflow/iam/v1:group"],
 )
 
 java_proto_library(

@@ -8,6 +8,8 @@ go_proto_library(
     ],
     importpath = "github.com/EngFlow/engflowapis/go/engflow/iam/v1",
     protos = [
+        "@engflowapis//engflow/iam/v1:group",
+        "@engflowapis//engflow/iam/v1:group_service",
         "@engflowapis//engflow/iam/v1:identity_and_access_management",
         "@engflowapis//engflow/iam/v1:policy",
         "@engflowapis//engflow/iam/v1:role",

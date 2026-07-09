@@ -4,6 +4,8 @@ proto_library(
     name = "v1",
     visibility = ["//visibility:public"],
     deps = [
+        ":group",
+        ":group_service",
         ":identity_and_access_management",
         ":policy",
         ":role",
@@ -20,6 +22,30 @@ proto_library(
     visibility = ["//visibility:public"],
     deps = [
         ":role",
+        "//engflow/api:options",
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
+)
+
+proto_library(
+    name = "group",
+    srcs = [
+        "group.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
+)
+
+proto_library(
+    name = "group_service",
+    srcs = [
+        "group_service.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":group",
         "//engflow/api:options",
         "@com_google_googleapis//google/api:field_behavior_proto",
     ],

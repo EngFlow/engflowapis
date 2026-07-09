@@ -1,0 +1,125 @@
+// Copyright 2026 EngFlow, Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package engflow.iam.v1;
+
+import "google/api/field_behavior.proto";
+import "engflow/api/options.proto";
+import "engflow/iam/v1/group.proto";
+
+option go_package = "github.com/EngFlow/engflowapis/go/engflow/iam/v1;iamv1";
+
+option java_multiple_files = true;
+option java_outer_classname = "GroupServiceProtos";
+option java_package = "com.engflow.iam.v1.proto";
+
+// Proprietary gRPC service for assigning EngFlow roles to externally
+// provisioned groups. Currently, groups are only supported via SCIM.
+//
+// This service exposes only role assignment, the one
+// capability the SCIM RFCs leave unstandardized.
+service GroupService {
+  option (engflow.api.engflow_service) = {
+    launch_stage: EARLY_ACCESS
+
+    availability {
+      product: "platform"
+
+      since { major: 2 minor: 170 patch: 0 }
+    }
+  };
+
+  // Looks up a single group by id, slug, or display name.
+  //
+  // Errors:
+  //   * `NOT_FOUND`: No group matches the selector.
+  //   * `INVALID_ARGUMENT`: Invalid search string.
+  rpc FindGroup(FindGroupRequest) returns (FindGroupResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+      availability {
+        product: "platform"
+        since { major: 2 minor: 170 patch: 0 }
+      }
+    };
+  }
+
+  // Assigns one or more roles to an existing group. Idempotent: assigning a
+  // role the group already has is a no-op.
+  //
+  // Errors:
+  //   * `NOT_FOUND`: The group does not exist.
+  //   * `NOT_FOUND`: One or more named roles do not exist.
+  rpc AssignRoles(AssignRolesRequest) returns (AssignRolesResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+      availability {
+        product: "platform"
+        since { major: 2 minor: 99 patch: 0 }
+      }
+    };
+  }
+
+  // Removes one or more roles from an existing group. Idempotent: removing a
+  // role the group does not have is a no-op.
+  //
+  // Errors:
+  //   * `NOT_FOUND`: The group does not exist.
+  rpc RemoveRoles(RemoveRolesRequest) returns (RemoveRolesResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+      availability {
+        product: "platform"
+        since { major: 2 minor: 99 patch: 0 }
+      }
+    };
+  }
+}
+
+message FindGroupRequest {
+  // Searches by `name` or `display_name`.
+  string search = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message FindGroupResponse {
+  Group group = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message AssignRolesRequest {
+  // The target group, addressed by group `name`.
+  string group = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Role names to add. Must reference existing roles.
+  repeated string role = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message AssignRolesResponse {
+  // The group with its updated role set.
+  Group group = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message RemoveRolesRequest {
+  // The target group, addressed by group `name`.
+  string group = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Role names to remove.
+  repeated string role = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message RemoveRolesResponse {
+  // The group with its updated role set.
+  Group group = 1 [(google.api.field_behavior) = REQUIRED];
+}
