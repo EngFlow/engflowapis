@@ -42,7 +42,7 @@ service GroupService {
     }
   };
 
-  // Looks up a single group by id, slug, or display name.
+  // Looks up a single group by name, display name, or external id.
   //
   // Errors:
   //   * `NOT_FOUND`: No group matches the selector.
@@ -90,7 +90,7 @@ service GroupService {
 }
 
 message FindGroupRequest {
-  // Searches by `name` or `display_name`.
+  // Searches by `name`, `display_name`, or `externalId`.
   string search = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
