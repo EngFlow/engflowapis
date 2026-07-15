@@ -42,12 +42,25 @@ service GroupService {
     }
   };
 
-  // Looks up a single group by name, display name, or external id.
+  // Returns an existing group by name.
   //
   // Errors:
-  //   * `NOT_FOUND`: No group matches the selector.
-  //   * `INVALID_ARGUMENT`: Invalid search string.
-  rpc FindGroup(FindGroupRequest) returns (FindGroupResponse) {
+  //   * `NOT_FOUND`: No group exists with the given name.
+  rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {
+    option (engflow.api.engflow_method) = {
+      launch_stage: EARLY_ACCESS
+      availability {
+        product: "platform"
+        since { major: 2 minor: 170 patch: 0 }
+      }
+    };
+  }
+
+  // Returns every group, subject to pagination via `begin_index`/`end_index`.
+  // There is currently no filtering support: callers that need to look up a
+  // group by `display_name` or `external_id` must list all groups and filter
+  // client-side.
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {
     option (engflow.api.engflow_method) = {
       launch_stage: EARLY_ACCESS
       availability {
@@ -89,13 +102,31 @@ service GroupService {
   }
 }
 
-message FindGroupRequest {
-  // Searches by `name`, `display_name`, or `externalId`.
-  string search = 1 [(google.api.field_behavior) = REQUIRED];
+message GetGroupRequest {
+  // The name of the group.
+  string name = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-message FindGroupResponse {
+message GetGroupResponse {
   Group group = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListGroupsRequest {
+  // begin_index and end_index specify a range, limiting the results returned
+  // by ListGroups. begin_index is inclusive, end_index is exclusive. If
+  // begin_index is not set, it's effectively 0. If end_index is not set,
+  // it's effectively the maximum length.
+  int64 begin_index = 1;
+  int64 end_index = 2;
+}
+
+message ListGroupsResponse {
+  // The groups in the requested range.
+  repeated Group group = 1;
+
+  // Total number of groups that could be returned by ListGroups, for use
+  // with begin_index and end_index for pagination.
+  int64 count = 2;
 }
 
 message AssignRolesRequest {
