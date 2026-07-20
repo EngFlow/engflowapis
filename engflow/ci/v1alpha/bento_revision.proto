@@ -110,6 +110,10 @@ message CreateBentoRevisionRequest {
   // advanced options. Refer to the documentation for supported
   // fields.
   optional string invocation_json = 9 [(google.api.field_behavior) = OPTIONAL];
+
+  // Free-text comment describing this revision, e.g. the reason for the update.
+  // At most 256 bytes (UTF-8).
+  optional string comment = 10 [(google.api.field_behavior) = OPTIONAL];
 }
 
 message CreateBentoRevisionResponse {
@@ -172,6 +176,10 @@ message BentoRevisionInfo {
   // Runner invocation JSON. This json controls advanced
   // options. Refer to the public documentation for supported fields.
   optional string invocation_json = 12 [(google.api.field_behavior) = OPTIONAL];
+
+  // Free-text comment describing this revision, e.g. the reason for the update.
+  // May be empty.
+  optional string comment = 13 [(google.api.field_behavior) = OPTIONAL];
 }
 
 message ListBentoRevisionsResponse {
