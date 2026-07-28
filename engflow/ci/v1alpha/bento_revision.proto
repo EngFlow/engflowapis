@@ -62,7 +62,7 @@ service BentoRevision {
 }
 
 enum CiProvider {
-  LEGACY_BUILDKITE = 0;  // This enum is only used in the bento-revision UI
+  UNKNOWN = 0;  // deprecated.
   GITHUB = 1;
   BUILDKITE_PROVIDER =
       2;  // not BUILDKITE to avoid conflict with cistatus.proto
