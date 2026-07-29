@@ -66,7 +66,11 @@ enum CiProvider {
   GITHUB = 1;
   BUILDKITE_PROVIDER =
       2;  // not BUILDKITE to avoid conflict with cistatus.proto
-  CUSTOM = 3;
+  CUSTOM_PROVIDER = 3;
+
+  // Providerless CI that pushes status directly to the source forge's
+  // checks API.
+  ENGFLOW_PROVIDER = 4;
 }
 
 message CreateBentoRevisionRequest {
