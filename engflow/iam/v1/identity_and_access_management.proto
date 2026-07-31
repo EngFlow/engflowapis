@@ -163,7 +163,18 @@ message DeleteRoleResponse {}
 // Request type for the
 // [`ListRoles`][engflow.iam.v1alpha.IdentityAndAccessManagement/ListRole]
 // call.
-message ListRolesRequest {}
+message ListRolesRequest {
+  enum Scope {
+    // Lists all roles known top the cluster.
+    ALL = 0;
+    // Lists roles which may be assigned to service accounts.
+    // Service accounts may not assume roles which grant IAM, credential
+    // management, or credential minting permissions.
+    SERVICE_ACCOUNT = 1;
+  }
+
+  Scope scope = 1;
+}
 
 // Response type for the
 // [`ListRoles`][engflow.iam.v1alpha.IdentityAndAccessManagement/ListRole]
