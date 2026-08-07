@@ -168,9 +168,9 @@ message ListRolesRequest {
     // Lists all roles known top the cluster.
     ALL = 0;
     // Lists roles which may be assigned to service accounts.
-    // Service accounts may not assume roles which grant IAM, credential
+    // Services may not assume roles which grant IAM, credential
     // management, or credential minting permissions.
-    SERVICE_ACCOUNT = 1;
+    SERVICE = 1;
   }
 
   Scope scope = 1;
