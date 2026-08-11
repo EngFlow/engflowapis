@@ -1,0 +1,7 @@
+set noparent
+
+group: owners
+  //teams/api.owners
+
+required:
+  owners: 1
