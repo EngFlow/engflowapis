@@ -170,6 +170,9 @@ message ListRolesRequest {
     // Lists roles which may be assigned to service accounts.
     // Services may not assume roles which grant IAM, credential
     // management, or credential minting permissions.
+    //
+    // See https://docs.engflow.com/re/config/service-tokens.html#limitations
+    // for more details
     SERVICE = 1;
   }
 
