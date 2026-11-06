@@ -53,4 +53,11 @@ message BuildProgressEvent {
   // The actual build event.
   google.devtools.build.v1.BuildEvent build_event = 4
       [(google.api.field_behavior) = REQUIRED];
+
+  // Whether a user cancelled the invocation's remote execution.
+  //
+  // Only set on `invocation_attempt_finished` events. Bazel reports a cancelled
+  // invocation as failed, since it only sees its remote actions fail, so
+  // EngFlow records the cancellation next to the event Bazel sent.
+  bool cancelled_by_user = 5 [(google.api.field_behavior) = OPTIONAL];
 }
